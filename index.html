@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Administrador de Alumnos — Estático</title>
+  <style>
+    :root{
+      --bg:#0f172a;
+      --panel:#111827;
+      --muted:#1f2937;
+      --ink:#e5e7eb;
+      --ink-dim:#9ca3af;
+      --brand:#22d3ee;
+      --brand-2:#60a5fa;
+      --ok:#22c55e;
+      --warn:#f59e0b;
+      --shadow: 0 10px 25px rgba(0,0,0,.30), 0 8px 10px rgba(0,0,0,.22);
+      --radius:16px;
+      --sidebar-w: 220px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:system-ui, sans-serif;background:linear-gradient(135deg,var(--bg),#0b1225);color:var(--ink)}
+
+    .app{display:grid;grid-template-columns:var(--sidebar-w) 1fr;min-height:100dvh}
+    aside{background:#111827;border-right:1px solid #263246;padding:20px}
+    .brand{display:flex;align-items:center;gap:10px;margin-bottom:20px}
+    .logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--brand),var(--brand-2));display:grid;place-items:center;box-shadow:var(--shadow)}
+    .logo b{color:#0b1225}
+    .title b{display:block;font-size:16px}
+    .nav-btn{width:100%;padding:10px 12px;border-radius:10px;background:#1f2937;border:none;color:var(--ink);cursor:pointer;text-align:left}
+    .nav-btn[aria-current="page"]{background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#0b1225}
+
+    .container{max-width:1100px;margin:0 auto;padding:20px}
+    header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+    .actions{display:flex;gap:8px}
+    .btn{padding:10px 14px;border-radius:10px;border:none;cursor:pointer}
+    .btn-primary{background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#0b1225}
+    .btn-ghost{background:#1f2937;color:var(--ink)}
+
+    .panel{background:rgba(17,24,39,.9);border:1px solid #263246;border-radius:var(--radius);box-shadow:var(--shadow)}
+    .toolbar{display:grid;grid-template-columns:1fr 200px 160px;gap:10px;padding:14px}
+    input,select{width:100%;padding:10px 12px;border-radius:8px;border:1px solid #2b3547;background:#0c1427;color:var(--ink)}
+
+    table{width:100%;border-collapse:separate;border-spacing:0 8px}
+    thead th{font-size:12px;color:var(--ink-dim);text-align:left;padding:0 12px;text-transform:uppercase}
+    tbody tr{background:#0c1427;border:1px solid #263246}
+    tbody td{padding:10px 12px}
+    .table-actions{display:flex;gap:8px}
+    .icon{cursor:pointer}
+    .badge{padding:4px 8px;border-radius:10px;font-size:12px}
+    .badge.ok{color:#22c55e}
+    .badge.warn{color:#f59e0b}
+
+    dialog{border:none;border-radius:12px;background:#0b1429;color:var(--ink);padding:0;width:min(600px,90vw)}
+    dialog::backdrop{background:rgba(0,0,0,.6)}
+    .modal-head,.modal-foot{padding:16px;border-bottom:1px solid #263246;display:flex;justify-content:space-between;align-items:center}
+    .modal-foot{border-top:1px solid #263246;border-bottom:none}
+    .modal-body{padding:18px}
+    label{font-size:13px;color:var(--ink-dim)}
+    input[type=text],input[type=email],input[type=tel],select{margin-top:4px}
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside>
+      <div class="brand">
+        <div class="logo"><b>AE</b></div>
+        <div class="title"><b>Admin Alumnos</b></div>
+      </div>
+      <button class="nav-btn" aria-current="page">🧑‍🎓 Alumnos</button>
+    </aside>
+
+    <main>
+      <div class="container">
+        <header>
+          <div>
+            <h1 style="margin:0">Alumnos</h1>
+            <div class="muted">Sin backend • Persistencia localStorage • CSV</div>
+          </div>
+          <div class="actions">
+            <button class="btn btn-ghost" id="btnExport">⬇️ Exportar</button>
+            <label class="btn btn-ghost">
+              ⬆️ Importar
+              <input type="file" id="fileImport" accept=".csv" style="display:none">
+            </label>
+            <button class="btn btn-primary" id="btnAdd">➕ Nuevo alumno</button>
+          </div>
+        </header>
+
+        <section class="panel">
+          <div class="toolbar">
+            <input type="text" id="txtSearch" placeholder="Buscar por nombre o email">
+            <select id="selCourse">
+              <option value="">Todos los cursos</option>
+              <option>English A1</option>
+              <option>English B1</option>
+              <option>English B2</option>
+              <option>TOEFL</option>
+            </select>
+            <select id="selStatus">
+              <option value="">Todos los estados</option>
+              <option value="Activo">Activo</option>
+              <option value="En pausa">En pausa</option>
+            </select>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Teléfono</th>
+                <th>Curso</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="tbody"></tbody>
+          </table>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <!-- Modal CRUD -->
+  <dialog id="modal">
+    <form id="form" method="dialog">
+      <div class="modal-head">
+        <strong id="modalTitle">Nuevo alumno</strong>
+        <button type="button" id="btnClose" class="btn">✖</button>
+      </div>
+      <div class="modal-body">
+        <label>Nombre<input type="text" id="mName" required></label>
+        <label>Email<input type="email" id="mEmail" required></label>
+        <label>Teléfono<input type="tel" id="mPhone"></label>
+        <label>Curso<select id="mCourse"><option>English A1</option><option>English B1</option><option>English B2</option><option>TOEFL</option></select></label>
+        <label>Estado<select id="mStatus"><option>Activo</option><option>En pausa</option></select></label>
+        <label>Notas<input type="text" id="mNotes"></label>
+      </div>
+      <div class="modal-foot">
+        <button type="button" id="btnCancel" class="btn">Cancelar</button>
+        <button type="submit" id="btnSave" class="btn btn-primary">Guardar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script type="module">
+  // ====== Config ======
+  const USE_API = false; // <-- cuando tengas backend: true
+  const API_BASE = 'https://api.tu-dominio.com'; // luego lo cambiamos
+  const TOKEN    = null; // luego usaremos Cognito y pondremos el JWT aquí
+
+  // ====== Util ======
+  const $ = s => document.querySelector(s);
+  const uid = () => Math.floor(Math.random()*9e5+1e5);
+
+  // ====== API Client (lista para el futuro) ======
+  async function apiRequest(path, opts = {}) {
+    const headers = new Headers(opts.headers || {});
+    headers.set('Content-Type', 'application/json');
+    if (TOKEN) headers.set('Authorization', `Bearer ${TOKEN}`);
+    const res = await fetch(`${API_BASE}${path}`, { ...opts, headers, mode: 'cors' });
+    if (!res.ok) {
+      const text = await res.text().catch(()=> '');
+      throw new Error(`HTTP ${res.status}: ${text || res.statusText}`);
+    }
+    return res.status === 204 ? null : res.json();
+  }
+  const ApiStudents = {
+    list:   ()      => apiRequest(`/students`),
+    create: (dto)   => apiRequest(`/students`, { method:'POST', body: JSON.stringify(dto) }),
+    update: (id,dto)=> apiRequest(`/students/${id}`, { method:'PUT', body: JSON.stringify(dto) }),
+    delete: (id)    => apiRequest(`/students/${id}`, { method:'DELETE' }),
+  };
+
+  // ====== LocalStorage impl (la que ya tenías) ======
+  const LS_KEY = 'students_simple_v1';
+  const demo   = [{id: uid(), name:'Ana López', email:'ana@example.com', phone:'+52 664 111 0001', course:'English A1', status:'Activo', notes:'Pagó mes 1'}];
+  function lsLoad(){
+    const raw = localStorage.getItem(LS_KEY);
+    const arr = raw ? JSON.parse(raw) : demo;
+    localStorage.setItem(LS_KEY, JSON.stringify(arr));
+    return arr;
+  }
+  function lsSave(arr){ localStorage.setItem(LS_KEY, JSON.stringify(arr)); }
+  let cache = lsLoad();
+
+  const LsStudents = {
+    async list(){ return structuredClone(cache); },
+    async create(dto){
+      const row = { id: uid(), ...dto };
+      cache.push(row); lsSave(cache); return row;
+    },
+    async update(id, dto){
+      const i = cache.findIndex(x => x.id == id);
+      if (i >= 0) { cache[i] = { ...cache[i], ...dto }; lsSave(cache); return cache[i]; }
+      throw new Error('Not found');
+    },
+    async delete(id){
+      cache = cache.filter(x => x.id != id); lsSave(cache); return null;
+    }
+  };
+
+  // ====== DataSource (único punto que cambia entre LS y API) ======
+  const DataSource = USE_API ? ApiStudents : LsStudents;
+
+  // ====== Render / UI (tu misma lógica, ahora usando DataSource) ======
+  function badge(status){ return `<span class="badge ${status==='Activo' ? 'ok':'warn'}">${status}</span>` }
+
+  async function render(){
+    const tb = $('#tbody');
+    tb.innerHTML = '';
+    const data = await DataSource.list();
+    // filtros básicos actuales
+    const q = $('#txtSearch').value?.trim().toLowerCase() || '';
+    const c = $('#selCourse').value || '';
+    const s = $('#selStatus').value || '';
+
+    const filtered = data.filter(row => {
+      const matchQ = !q || [row.name,row.email].some(v => (v||'').toLowerCase().includes(q));
+      const matchC = !c || row.course === c;
+      const matchS = !s || row.status === s;
+      return matchQ && matchC && matchS;
+    });
+
+    for(const r of filtered){
+      tb.innerHTML += `
+        <tr>
+          <td>${r.id}</td>
+          <td>${r.name}</td>
+          <td>${r.email}</td>
+          <td>${r.phone||''}</td>
+          <td>${r.course}</td>
+          <td>${badge(r.status)}</td>
+          <td>
+            <div class="table-actions">
+              <span class="icon" data-edit="${r.id}">✏️</span>
+              <span class="icon" data-del="${r.id}">🗑️</span>
+            </div>
+          </td>
+        </tr>`;
+    }
+  }
+
+  function openModal(id=null){
+    $('#modal').showModal();
+    $('#modalTitle').textContent = id ? 'Editar alumno' : 'Nuevo alumno';
+    if(id){
+      DataSource.list().then(rows => {
+        const s = rows.find(x=> x.id == id);
+        $('#mName').value   = s?.name  || '';
+        $('#mEmail').value  = s?.email || '';
+        $('#mPhone').value  = s?.phone || '';
+        $('#mCourse').value = s?.course|| 'English A1';
+        $('#mStatus').value = s?.status|| 'Activo';
+        $('#mNotes').value  = s?.notes || '';
+      });
+    } else {
+      $('#form').reset();
+      $('#mCourse').value = 'English A1';
+      $('#mStatus').value = 'Activo';
+    }
+    $('#btnSave').onclick = e => saveModal(e,id);
+  }
+  function closeModal(){ $('#modal').close(); }
+
+  async function saveModal(e, id){
+    e.preventDefault();
+    const dto = {
+      name:  $('#mName').value,
+      email: $('#mEmail').value,
+      phone: $('#mPhone').value,
+      course:$('#mCourse').value,
+      status:$('#mStatus').value,
+      notes: $('#mNotes').value
+    };
+    if(id) await DataSource.update(id, dto);
+    else   await DataSource.create(dto);
+    closeModal();
+    await render();
+  }
+
+  async function del(id){
+    if(!confirm('¿Eliminar este alumno?')) return;
+    await DataSource.delete(id);
+    await render();
+  }
+
+  // ====== CSV Export / Import (con DataSource.list para export) ======
+  $('#btnExport').onclick = async () => {
+    const headers = ['id','name','email','phone','course','status','notes'];
+    const esc = v => '"' + String(v ?? '').replaceAll('"','""') + '"';
+    const rows = await DataSource.list();
+    const csv  = headers.join(',') + '\n' + rows.map(r => headers.map(h => esc(r[h])).join(',')).join('\n');
+    const blob = new Blob([csv], { type:'text/csv' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'alumnos.csv';
+    a.click();
+  };
+
+  $('#fileImport').onchange = async e => {
+    const f = e.target.files[0]; if(!f) return;
+    const text = await f.text();
+    const lines = text.replace(/\r/g,'').split('\n').filter(Boolean);
+    const headers = lines.shift().split(',').map(h=>h.replace(/^"|"$/g,''));
+    for(const line of lines){
+      const raw = []; let cur=''; let q=false;
+      for(let i=0;i<line.length;i++){
+        const ch=line[i];
+        if(ch === '"'){
+          if(q && line[i+1] === '"'){ cur+='"'; i++; }
+          else q = !q;
+        } else if(ch === ',' && !q){ raw.push(cur); cur=''; }
+        else cur += ch;
+      }
+      raw.push(cur);
+      const obj = headers.reduce((acc,h,idx)=>{ acc[h] = (raw[idx] ?? '').replace(/^"|"$/g,''); return acc; }, {});
+      // create sin respetar ID del CSV (para evitar colisiones locales)
+      await DataSource.create({
+        name: obj.name, email: obj.email, phone: obj.phone,
+        course: obj.course, status: obj.status || 'Activo', notes: obj.notes
+      });
+    }
+    await render();
+    e.target.value = '';
+    alert('Importación completada');
+  };
+
+  // ====== Eventos UI ======
+  $('#btnAdd').onclick = () => openModal();
+  $('#btnClose').onclick = $('#btnCancel').onclick = closeModal;
+  $('#tbody').onclick = e => {
+    const editId = e.target.dataset.edit;
+    const delId  = e.target.dataset.del;
+    if (editId) openModal(editId);
+    if (delId)  del(delId);
+  };
+
+  $('#txtSearch').addEventListener('input', render);
+  $('#selCourse').addEventListener('change', render);
+  $('#selStatus').addEventListener('change', render);
+
+  // ====== Init ======
+  (async function init(){
+    if (USE_API && !TOKEN) {
+      console.info('Modo API activado, falta implementar login (Cognito). Usando TOKEN=null por ahora.');
+    }
+    await render();
+  })();
+</script>
+  
+</body>
+</html>
