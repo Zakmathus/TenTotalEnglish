@@ -76,7 +76,7 @@
         <header>
           <div>
             <h1 style="margin:0">Students</h1>
-            <div class="muted">Sin backend • Persistencia localStorage • CSV</div>
+            <div class="muted">No backend • Persisten localStorage • CSV</div>
           </div>
           <div class="actions">
             <button class="btn btn-ghost" id="btnExport">⬇️ Export</button>
@@ -90,9 +90,9 @@
 
         <section class="panel">
           <div class="toolbar">
-            <input type="text" id="txtSearch" placeholder="Buscar por nombre o email">
+            <input type="text" id="txtSearch" placeholder="Search by nombre or email">
             <select id="selCourse">
-              <option value="">Todos los cursos</option>
+              <option value="">All Courses</option>
               <option>English A1</option>
               <option>English B1</option>
               <option>English B2</option>
@@ -100,7 +100,7 @@
             </select>
             <select id="selStatus">
               <option value="">All Status</option>
-              <option value="Active">Activo</option>
+              <option value="Active">Active</option>
               <option value="On Hold">On Hold</option>
             </select>
           </div>
@@ -176,7 +176,7 @@
 
   // ====== LocalStorage impl (la que ya tenías) ======
   const LS_KEY = 'students_simple_v1';
-  const demo   = [{id: uid(), name:'Ana López', email:'ana@example.com', phone:'+52 664 111 0001', course:'English A1', status:'Activo', notes:'Pagó mes 1'}];
+  const demo   = [{id: uid(), name:'Ana López', email:'ana@example.com', phone:'+52 664 111 0001', course:'English A1', status:'Active', notes:'Paid Month 1'}];
   function lsLoad(){
     const raw = localStorage.getItem(LS_KEY);
     const arr = raw ? JSON.parse(raw) : demo;
@@ -206,7 +206,7 @@
   const DataSource = USE_API ? ApiStudents : LsStudents;
 
   // ====== Render / UI (tu misma lógica, ahora usando DataSource) ======
-  function badge(status){ return `<span class="badge ${status==='Activo' ? 'ok':'warn'}">${status}</span>` }
+  function badge(status){ return `<span class="badge ${status==='Active' ? 'ok':'warn'}">${status}</span>` }
 
   async function render(){
     const tb = $('#tbody');
@@ -253,13 +253,13 @@
         $('#mEmail').value  = s?.email || '';
         $('#mPhone').value  = s?.phone || '';
         $('#mCourse').value = s?.course|| 'English A1';
-        $('#mStatus').value = s?.status|| 'Activo';
+        $('#mStatus').value = s?.status|| 'Active';
         $('#mNotes').value  = s?.notes || '';
       });
     } else {
       $('#form').reset();
       $('#mCourse').value = 'English A1';
-      $('#mStatus').value = 'Activo';
+      $('#mStatus').value = 'Active';
     }
     $('#btnSave').onclick = e => saveModal(e,id);
   }
@@ -320,7 +320,7 @@
       // create sin respetar ID del CSV (para evitar colisiones locales)
       await DataSource.create({
         name: obj.name, email: obj.email, phone: obj.phone,
-        course: obj.course, status: obj.status || 'Activo', notes: obj.notes
+        course: obj.course, status: obj.status || 'Active', notes: obj.notes
       });
     }
     await render();
@@ -353,4 +353,5 @@
   
 </body>
 </html>
+
 
