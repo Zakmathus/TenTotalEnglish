@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Administrador de Alumnos — Estático</title>
+  <title>Administrador de Students — Estático</title>
   <style>
     :root{
       --bg:#0f172a;
@@ -66,16 +66,16 @@
     <aside>
       <div class="brand">
         <div class="logo"><b>AE</b></div>
-        <div class="title"><b>Admin Alumnos</b></div>
+        <div class="title"><b>Admin Students</b></div>
       </div>
-      <button class="nav-btn" aria-current="page">🧑‍🎓 Alumnos</button>
+      <button class="nav-btn" aria-current="page">🧑‍🎓 Students</button>
     </aside>
 
     <main>
       <div class="container">
         <header>
           <div>
-            <h1 style="margin:0">Alumnos</h1>
+            <h1 style="margin:0">Students</h1>
             <div class="muted">Sin backend • Persistencia localStorage • CSV</div>
           </div>
           <div class="actions">
@@ -84,7 +84,7 @@
               ⬆️ Importar
               <input type="file" id="fileImport" accept=".csv" style="display:none">
             </label>
-            <button class="btn btn-primary" id="btnAdd">➕ Nuevo alumno</button>
+            <button class="btn btn-primary" id="btnAdd">➕ New Student</button>
           </div>
         </header>
 
@@ -99,21 +99,21 @@
               <option>TOEFL</option>
             </select>
             <select id="selStatus">
-              <option value="">Todos los estados</option>
-              <option value="Activo">Activo</option>
-              <option value="En pausa">En pausa</option>
+              <option value="">All Status</option>
+              <option value="Active">Activo</option>
+              <option value="On Hold">On Hold</option>
             </select>
           </div>
           <table>
             <thead>
               <tr>
                 <th>ID</th>
-                <th>Nombre</th>
+                <th>Name</th>
                 <th>Email</th>
-                <th>Teléfono</th>
-                <th>Curso</th>
-                <th>Estado</th>
-                <th>Acciones</th>
+                <th>Phone</th>
+                <th>Course</th>
+                <th>Status</th>
+                <th>Accions</th>
               </tr>
             </thead>
             <tbody id="tbody"></tbody>
@@ -127,20 +127,20 @@
   <dialog id="modal">
     <form id="form" method="dialog">
       <div class="modal-head">
-        <strong id="modalTitle">Nuevo alumno</strong>
+        <strong id="modalTitle">New Student</strong>
         <button type="button" id="btnClose" class="btn">✖</button>
       </div>
       <div class="modal-body">
-        <label>Nombre<input type="text" id="mName" required></label>
+        <label>Name<input type="text" id="mName" required></label>
         <label>Email<input type="email" id="mEmail" required></label>
-        <label>Teléfono<input type="tel" id="mPhone"></label>
-        <label>Curso<select id="mCourse"><option>English A1</option><option>English B1</option><option>English B2</option><option>TOEFL</option></select></label>
-        <label>Estado<select id="mStatus"><option>Activo</option><option>En pausa</option></select></label>
-        <label>Notas<input type="text" id="mNotes"></label>
+        <label>Phone<input type="tel" id="mPhone"></label>
+        <label>Course<select id="mCourse"><option>English A1</option><option>English B1</option><option>English B2</option><option>TOEFL</option></select></label>
+        <label>Status<select id="mStatus"><option>Active</option><option>On Hold</option></select></label>
+        <label>Notes<input type="text" id="mNotes"></label>
       </div>
       <div class="modal-foot">
-        <button type="button" id="btnCancel" class="btn">Cancelar</button>
-        <button type="submit" id="btnSave" class="btn btn-primary">Guardar</button>
+        <button type="button" id="btnCancel" class="btn">Cancel</button>
+        <button type="submit" id="btnSave" class="btn btn-primary">Save</button>
       </div>
     </form>
   </dialog>
@@ -245,7 +245,7 @@
 
   function openModal(id=null){
     $('#modal').showModal();
-    $('#modalTitle').textContent = id ? 'Editar alumno' : 'Nuevo alumno';
+    $('#modalTitle').textContent = id ? 'Edit Student' : 'New Student';
     if(id){
       DataSource.list().then(rows => {
         const s = rows.find(x=> x.id == id);
@@ -282,7 +282,7 @@
   }
 
   async function del(id){
-    if(!confirm('¿Eliminar este alumno?')) return;
+    if(!confirm('¿Delete Student?')) return;
     await DataSource.delete(id);
     await render();
   }
@@ -296,7 +296,7 @@
     const blob = new Blob([csv], { type:'text/csv' });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = 'alumnos.csv';
+    a.download = 'Students.csv';
     a.click();
   };
 
@@ -325,7 +325,7 @@
     }
     await render();
     e.target.value = '';
-    alert('Importación completada');
+    alert('Import Complete');
   };
 
   // ====== Eventos UI ======
