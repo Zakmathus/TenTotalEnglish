@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\TentotalEnglish.Api.props" />
+</Project>

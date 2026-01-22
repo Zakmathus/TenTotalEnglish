@@ -1,0 +1,197 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\lmechsan\\OneDrive - Flex\\Desktop\\New folder\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{9B8AC054-91E7-4DAC-97B7-F9C99658E12D}|TentotalEnglish.Api\\TentotalEnglish.Api.csproj|c:\\users\\lmechsan\\onedrive - flex\\desktop\\new folder\\tentotalenglish.api\\controllers\\paymentscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B8AC054-91E7-4DAC-97B7-F9C99658E12D}|TentotalEnglish.Api\\TentotalEnglish.Api.csproj|solutionrelative:tentotalenglish.api\\controllers\\paymentscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{74B9F79D-FDC1-4D6C-9297-BAD38C145E30}|TentotalEnglish.Domain\\TentotalEnglish.Domain.csproj|c:\\users\\lmechsan\\onedrive - flex\\desktop\\new folder\\tentotalenglish.domain\\entities\\payment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{74B9F79D-FDC1-4D6C-9297-BAD38C145E30}|TentotalEnglish.Domain\\TentotalEnglish.Domain.csproj|solutionrelative:tentotalenglish.domain\\entities\\payment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B8AC054-91E7-4DAC-97B7-F9C99658E12D}|TentotalEnglish.Api\\TentotalEnglish.Api.csproj|c:\\users\\lmechsan\\onedrive - flex\\desktop\\new folder\\tentotalenglish.api\\controllers\\teacherscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B8AC054-91E7-4DAC-97B7-F9C99658E12D}|TentotalEnglish.Api\\TentotalEnglish.Api.csproj|solutionrelative:tentotalenglish.api\\controllers\\teacherscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B8AC054-91E7-4DAC-97B7-F9C99658E12D}|TentotalEnglish.Api\\TentotalEnglish.Api.csproj|c:\\users\\lmechsan\\onedrive - flex\\desktop\\new folder\\tentotalenglish.api\\controllers\\studentscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B8AC054-91E7-4DAC-97B7-F9C99658E12D}|TentotalEnglish.Api\\TentotalEnglish.Api.csproj|solutionrelative:tentotalenglish.api\\controllers\\studentscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D5FA9BA3-EFF5-491C-817A-0AE2BB30C24E}|TentotalEnglish.Infrastructure\\TentotalEnglish.Infrastructure.csproj|c:\\users\\lmechsan\\onedrive - flex\\desktop\\new folder\\tentotalenglish.infrastructure\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D5FA9BA3-EFF5-491C-817A-0AE2BB30C24E}|TentotalEnglish.Infrastructure\\TentotalEnglish.Infrastructure.csproj|solutionrelative:tentotalenglish.infrastructure\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{74B9F79D-FDC1-4D6C-9297-BAD38C145E30}|TentotalEnglish.Domain\\TentotalEnglish.Domain.csproj|c:\\users\\lmechsan\\onedrive - flex\\desktop\\new folder\\tentotalenglish.domain\\entities\\student.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{74B9F79D-FDC1-4D6C-9297-BAD38C145E30}|TentotalEnglish.Domain\\TentotalEnglish.Domain.csproj|solutionrelative:tentotalenglish.domain\\entities\\student.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{74B9F79D-FDC1-4D6C-9297-BAD38C145E30}|TentotalEnglish.Domain\\TentotalEnglish.Domain.csproj|c:\\users\\lmechsan\\onedrive - flex\\desktop\\new folder\\tentotalenglish.domain\\entities\\teacher.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{74B9F79D-FDC1-4D6C-9297-BAD38C145E30}|TentotalEnglish.Domain\\TentotalEnglish.Domain.csproj|solutionrelative:tentotalenglish.domain\\entities\\teacher.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B8AC054-91E7-4DAC-97B7-F9C99658E12D}|TentotalEnglish.Api\\TentotalEnglish.Api.csproj|c:\\users\\lmechsan\\onedrive - flex\\desktop\\new folder\\tentotalenglish.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9B8AC054-91E7-4DAC-97B7-F9C99658E12D}|TentotalEnglish.Api\\TentotalEnglish.Api.csproj|solutionrelative:tentotalenglish.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D5FA9BA3-EFF5-491C-817A-0AE2BB30C24E}|TentotalEnglish.Infrastructure\\TentotalEnglish.Infrastructure.csproj|c:\\users\\lmechsan\\onedrive - flex\\desktop\\new folder\\tentotalenglish.infrastructure\\tentotalenglish.infrastructure.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{D5FA9BA3-EFF5-491C-817A-0AE2BB30C24E}|TentotalEnglish.Infrastructure\\TentotalEnglish.Infrastructure.csproj|solutionrelative:tentotalenglish.infrastructure\\tentotalenglish.infrastructure.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9B8AC054-91E7-4DAC-97B7-F9C99658E12D}|TentotalEnglish.Api\\TentotalEnglish.Api.csproj|c:\\users\\lmechsan\\onedrive - flex\\desktop\\new folder\\tentotalenglish.api\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{9B8AC054-91E7-4DAC-97B7-F9C99658E12D}|TentotalEnglish.Api\\TentotalEnglish.Api.csproj|solutionrelative:tentotalenglish.api\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 4,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:130:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "PaymentsController.cs",
+              "DocumentMoniker": "C:\\Users\\lmechsan\\OneDrive - Flex\\Desktop\\New folder\\TentotalEnglish.Api\\Controllers\\PaymentsController.cs",
+              "RelativeDocumentMoniker": "TentotalEnglish.Api\\Controllers\\PaymentsController.cs",
+              "ToolTip": "C:\\Users\\lmechsan\\OneDrive - Flex\\Desktop\\New folder\\TentotalEnglish.Api\\Controllers\\PaymentsController.cs",
+              "RelativeToolTip": "TentotalEnglish.Api\\Controllers\\PaymentsController.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAxwBUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-20T09:19:12.942Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Payment.cs",
+              "DocumentMoniker": "C:\\Users\\lmechsan\\OneDrive - Flex\\Desktop\\New folder\\TentotalEnglish.Domain\\Entities\\Payment.cs",
+              "RelativeDocumentMoniker": "TentotalEnglish.Domain\\Entities\\Payment.cs",
+              "ToolTip": "C:\\Users\\lmechsan\\OneDrive - Flex\\Desktop\\New folder\\TentotalEnglish.Domain\\Entities\\Payment.cs",
+              "RelativeToolTip": "TentotalEnglish.Domain\\Entities\\Payment.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAgwAUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-20T09:08:22.757Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "TeachersController.cs",
+              "DocumentMoniker": "C:\\Users\\lmechsan\\OneDrive - Flex\\Desktop\\New folder\\TentotalEnglish.Api\\Controllers\\TeachersController.cs",
+              "RelativeDocumentMoniker": "TentotalEnglish.Api\\Controllers\\TeachersController.cs",
+              "ToolTip": "C:\\Users\\lmechsan\\OneDrive - Flex\\Desktop\\New folder\\TentotalEnglish.Api\\Controllers\\TeachersController.cs",
+              "RelativeToolTip": "TentotalEnglish.Api\\Controllers\\TeachersController.cs",
+              "ViewState": "AgIAAEwAAAAAAAAAAAAAwFgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-20T09:01:53.57Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Teacher.cs",
+              "DocumentMoniker": "C:\\Users\\lmechsan\\OneDrive - Flex\\Desktop\\New folder\\TentotalEnglish.Domain\\Entities\\Teacher.cs",
+              "RelativeDocumentMoniker": "TentotalEnglish.Domain\\Entities\\Teacher.cs",
+              "ToolTip": "C:\\Users\\lmechsan\\OneDrive - Flex\\Desktop\\New folder\\TentotalEnglish.Domain\\Entities\\Teacher.cs",
+              "RelativeToolTip": "TentotalEnglish.Domain\\Entities\\Teacher.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAA4wAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-20T08:59:31.443Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "StudentsController.cs",
+              "DocumentMoniker": "C:\\Users\\lmechsan\\OneDrive - Flex\\Desktop\\New folder\\TentotalEnglish.Api\\Controllers\\StudentsController.cs",
+              "RelativeDocumentMoniker": "TentotalEnglish.Api\\Controllers\\StudentsController.cs",
+              "ToolTip": "C:\\Users\\lmechsan\\OneDrive - Flex\\Desktop\\New folder\\TentotalEnglish.Api\\Controllers\\StudentsController.cs",
+              "RelativeToolTip": "TentotalEnglish.Api\\Controllers\\StudentsController.cs",
+              "ViewState": "AgIAAEsAAAAAAAAAAAAAwFcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-20T08:23:46.679Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Student.cs",
+              "DocumentMoniker": "C:\\Users\\lmechsan\\OneDrive - Flex\\Desktop\\New folder\\TentotalEnglish.Domain\\Entities\\Student.cs",
+              "RelativeDocumentMoniker": "TentotalEnglish.Domain\\Entities\\Student.cs",
+              "ToolTip": "C:\\Users\\lmechsan\\OneDrive - Flex\\Desktop\\New folder\\TentotalEnglish.Domain\\Entities\\Student.cs",
+              "RelativeToolTip": "TentotalEnglish.Domain\\Entities\\Student.cs",
+              "ViewState": "AgIAAAQAAAAAAAAAAAAzwAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-20T08:16:46.716Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\lmechsan\\OneDrive - Flex\\Desktop\\New folder\\TentotalEnglish.Api\\Program.cs",
+              "RelativeDocumentMoniker": "TentotalEnglish.Api\\Program.cs",
+              "ToolTip": "C:\\Users\\lmechsan\\OneDrive - Flex\\Desktop\\New folder\\TentotalEnglish.Api\\Program.cs",
+              "RelativeToolTip": "TentotalEnglish.Api\\Program.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAwBUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-17T06:04:42.584Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "appsettings.Development.json",
+              "DocumentMoniker": "C:\\Users\\lmechsan\\OneDrive - Flex\\Desktop\\New folder\\TentotalEnglish.Api\\appsettings.Development.json",
+              "RelativeDocumentMoniker": "TentotalEnglish.Api\\appsettings.Development.json",
+              "ToolTip": "C:\\Users\\lmechsan\\OneDrive - Flex\\Desktop\\New folder\\TentotalEnglish.Api\\appsettings.Development.json",
+              "RelativeToolTip": "TentotalEnglish.Api\\appsettings.Development.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-01-17T06:03:25.201Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "AppDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\lmechsan\\OneDrive - Flex\\Desktop\\New folder\\TentotalEnglish.Infrastructure\\Data\\AppDbContext.cs",
+              "RelativeDocumentMoniker": "TentotalEnglish.Infrastructure\\Data\\AppDbContext.cs",
+              "ToolTip": "C:\\Users\\lmechsan\\OneDrive - Flex\\Desktop\\New folder\\TentotalEnglish.Infrastructure\\Data\\AppDbContext.cs",
+              "RelativeToolTip": "TentotalEnglish.Infrastructure\\Data\\AppDbContext.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAA1wBEAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-15T06:42:05.609Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "TentotalEnglish.Infrastructure.csproj",
+              "DocumentMoniker": "C:\\Users\\lmechsan\\OneDrive - Flex\\Desktop\\New folder\\TentotalEnglish.Infrastructure\\TentotalEnglish.Infrastructure.csproj",
+              "RelativeDocumentMoniker": "TentotalEnglish.Infrastructure\\TentotalEnglish.Infrastructure.csproj",
+              "ToolTip": "C:\\Users\\lmechsan\\OneDrive - Flex\\Desktop\\New folder\\TentotalEnglish.Infrastructure\\TentotalEnglish.Infrastructure.csproj",
+              "RelativeToolTip": "TentotalEnglish.Infrastructure\\TentotalEnglish.Infrastructure.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-01-13T23:59:34.274Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
