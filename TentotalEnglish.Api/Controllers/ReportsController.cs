@@ -33,9 +33,9 @@ public class ReportsController : ControllerBase
             .OrderBy(x => x.Year).ThenBy(x => x.Month)
             .ToListAsync();
 
-                var result = raw
-                    .Select(x => new MonthlyPaymentsReportItem(x.Year, x.Month, x.TotalAmount, x.PaymentsCount))
-                    .ToList();
+        var result = raw
+            .Select(x => new MonthlyPaymentsReportItem(x.Year, x.Month, x.TotalAmount, x.PaymentsCount))
+            .ToList();
 
         return result;
     }
@@ -68,9 +68,9 @@ public class ReportsController : ControllerBase
             .OrderBy(x => x.Year).ThenBy(x => x.Month)
             .ToListAsync();
 
-                var result = raw
-                    .Select(x => new MonthlyPaymentsReportItem(x.Year, x.Month, x.TotalAmount, x.PaymentsCount))
-                    .ToList();
+        var result = raw
+            .Select(x => new MonthlyPaymentsReportItem(x.Year, x.Month, x.TotalAmount, x.PaymentsCount))
+            .ToList();
 
         return result;
     }
