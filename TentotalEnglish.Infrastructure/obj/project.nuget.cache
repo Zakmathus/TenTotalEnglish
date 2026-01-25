@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "MQiL2Y0whho=",
+  "dgSpecHash": "JtwcuqC5qDA=",
   "success": true,
-  "projectFilePath": "C:\\Users\\lmechsan\\Downloads\\New folder\\TentotalEnglish.Infrastructure\\TentotalEnglish.Infrastructure.csproj",
+  "projectFilePath": "C:\\Users\\lmechsan\\Downloads\\TentotalEnglish\\TentotalEnglish.Infrastructure\\TentotalEnglish.Infrastructure.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\lmechsan\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\lmechsan\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\7.0.0\\microsoft.bcl.asyncinterfaces.7.0.0.nupkg.sha512",

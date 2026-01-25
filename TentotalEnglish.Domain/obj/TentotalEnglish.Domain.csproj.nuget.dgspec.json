@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\lmechsan\\Downloads\\New folder\\TentotalEnglish.Domain\\TentotalEnglish.Domain.csproj": {}
+    "C:\\Users\\lmechsan\\Downloads\\TentotalEnglish\\TentotalEnglish.Domain\\TentotalEnglish.Domain.csproj": {}
   },
   "projects": {
-    "C:\\Users\\lmechsan\\Downloads\\New folder\\TentotalEnglish.Domain\\TentotalEnglish.Domain.csproj": {
+    "C:\\Users\\lmechsan\\Downloads\\TentotalEnglish\\TentotalEnglish.Domain\\TentotalEnglish.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\lmechsan\\Downloads\\New folder\\TentotalEnglish.Domain\\TentotalEnglish.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\lmechsan\\Downloads\\TentotalEnglish\\TentotalEnglish.Domain\\TentotalEnglish.Domain.csproj",
         "projectName": "TentotalEnglish.Domain",
-        "projectPath": "C:\\Users\\lmechsan\\Downloads\\New folder\\TentotalEnglish.Domain\\TentotalEnglish.Domain.csproj",
+        "projectPath": "C:\\Users\\lmechsan\\Downloads\\TentotalEnglish\\TentotalEnglish.Domain\\TentotalEnglish.Domain.csproj",
         "packagesPath": "C:\\Users\\lmechsan\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\lmechsan\\Downloads\\New folder\\TentotalEnglish.Domain\\obj\\",
+        "outputPath": "C:\\Users\\lmechsan\\Downloads\\TentotalEnglish\\TentotalEnglish.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

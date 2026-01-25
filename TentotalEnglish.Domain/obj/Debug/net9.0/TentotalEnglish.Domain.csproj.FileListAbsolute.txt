@@ -9,3 +9,15 @@ C:\Users\lmechsan\OneDrive - Flex\Desktop\New folder\TentotalEnglish.Domain\obj\
 C:\Users\lmechsan\OneDrive - Flex\Desktop\New folder\TentotalEnglish.Domain\obj\Debug\net9.0\refint\TentotalEnglish.Domain.dll
 C:\Users\lmechsan\OneDrive - Flex\Desktop\New folder\TentotalEnglish.Domain\obj\Debug\net9.0\TentotalEnglish.Domain.pdb
 C:\Users\lmechsan\OneDrive - Flex\Desktop\New folder\TentotalEnglish.Domain\obj\Debug\net9.0\ref\TentotalEnglish.Domain.dll
+C:\Users\lmechsan\Downloads\TentotalEnglish\TentotalEnglish.Domain\bin\Debug\net9.0\TentotalEnglish.Domain.deps.json
+C:\Users\lmechsan\Downloads\TentotalEnglish\TentotalEnglish.Domain\bin\Debug\net9.0\TentotalEnglish.Domain.dll
+C:\Users\lmechsan\Downloads\TentotalEnglish\TentotalEnglish.Domain\bin\Debug\net9.0\TentotalEnglish.Domain.pdb
+C:\Users\lmechsan\Downloads\TentotalEnglish\TentotalEnglish.Domain\obj\Debug\net9.0\TentotalEnglish.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\lmechsan\Downloads\TentotalEnglish\TentotalEnglish.Domain\obj\Debug\net9.0\TentotalEnglish.Domain.AssemblyInfoInputs.cache
+C:\Users\lmechsan\Downloads\TentotalEnglish\TentotalEnglish.Domain\obj\Debug\net9.0\TentotalEnglish.Domain.AssemblyInfo.cs
+C:\Users\lmechsan\Downloads\TentotalEnglish\TentotalEnglish.Domain\obj\Debug\net9.0\TentotalEnglish.Domain.csproj.CoreCompileInputs.cache
+C:\Users\lmechsan\Downloads\TentotalEnglish\TentotalEnglish.Domain\obj\Debug\net9.0\TentotalEnglish.Domain.sourcelink.json
+C:\Users\lmechsan\Downloads\TentotalEnglish\TentotalEnglish.Domain\obj\Debug\net9.0\TentotalEnglish.Domain.dll
+C:\Users\lmechsan\Downloads\TentotalEnglish\TentotalEnglish.Domain\obj\Debug\net9.0\refint\TentotalEnglish.Domain.dll
+C:\Users\lmechsan\Downloads\TentotalEnglish\TentotalEnglish.Domain\obj\Debug\net9.0\TentotalEnglish.Domain.pdb
+C:\Users\lmechsan\Downloads\TentotalEnglish\TentotalEnglish.Domain\obj\Debug\net9.0\ref\TentotalEnglish.Domain.dll

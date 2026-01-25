@@ -51,8 +51,10 @@ public class PaymentsController : ControllerBase
             Amount = req.Amount,
             Currency = currency,
             Notes = string.IsNullOrWhiteSpace(req.Notes) ? null : req.Notes.Trim(),
-            PaidAtUtc = DateTime.UtcNow
+            PaidAtUtc = DateTime.UtcNow,
+            Student = new Student() // Initialize the required 'Student' property
         };
+
 
         _db.Payments.Add(payment);
         await _db.SaveChangesAsync();

@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using TentotalEnglish.Domain.Entities;
 
 namespace TentotalEnglish.Infrastructure.Data;
@@ -12,12 +12,23 @@ public class AppDbContext : DbContext
     public DbSet<Payment> Payments => Set<Payment>();
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Payment>()
-            .HasOne(p => p.Student)
-            .WithMany(s => s.Payments)
-            .HasForeignKey(p => p.StudentId);
+        modelBuilder.Entity<Enrollment>()
+         .HasOne(e => e.Student)
+         .WithMany(s => s.Enrollments)
+         .HasForeignKey(e => e.StudentId);
+
+        modelBuilder.Entity<Enrollment>()
+         .HasOne(e => e.Course)
+         .WithMany(c => c.Enrollments)
+         .HasForeignKey(e => e.CourseId);
+
+        // Evita duplicar inscripción activa del mismo alumno al mismo curso
+        modelBuilder.Entity<Enrollment>()
+         .HasIndex(e => new { e.StudentId, e.CourseId, e.IsActive });
 
         base.OnModelCreating(modelBuilder);
     }
+    public DbSet<Course> Courses => Set<Course>();
+    public DbSet<Enrollment> Enrollments => Set<Enrollment>();
 
 }

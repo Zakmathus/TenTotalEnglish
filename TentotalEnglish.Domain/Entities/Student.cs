@@ -1,4 +1,4 @@
-﻿namespace TentotalEnglish.Domain.Entities;
+namespace TentotalEnglish.Domain.Entities;
 
 public class Student
 {
@@ -8,5 +8,7 @@ public class Student
     public string Email { get; set; } = null!;
     public DateTime CreatedAtUtc { get; set; } = DateTime.UtcNow;
     public List<Payment> Payments { get; set; } = new();
+    public List<Enrollment> Enrollments { get; set; } = new();
+
 
 }
