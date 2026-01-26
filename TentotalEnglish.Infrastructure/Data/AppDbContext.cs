@@ -10,6 +10,9 @@ public class AppDbContext : DbContext
     public DbSet<Student> Students => Set<Student>();
     public DbSet<Teacher> Teachers => Set<Teacher>();
     public DbSet<Payment> Payments => Set<Payment>();
+    public DbSet<Course> Courses => Set<Course>();
+    public DbSet<Enrollment> Enrollments => Set<Enrollment>();
+    public DbSet<AdminUser> AdminUsers => Set<AdminUser>();
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Enrollment>()
@@ -28,7 +31,5 @@ public class AppDbContext : DbContext
 
         base.OnModelCreating(modelBuilder);
     }
-    public DbSet<Course> Courses => Set<Course>();
-    public DbSet<Enrollment> Enrollments => Set<Enrollment>();
-
+    
 }

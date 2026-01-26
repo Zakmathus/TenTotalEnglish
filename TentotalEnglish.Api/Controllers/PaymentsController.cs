@@ -3,11 +3,13 @@ using Microsoft.EntityFrameworkCore;
 using TentotalEnglish.Api.Models;
 using TentotalEnglish.Domain.Entities;
 using TentotalEnglish.Infrastructure.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TentotalEnglish.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize(Policy = "AdminOnly")]
 public class PaymentsController : ControllerBase
 {
     private readonly AppDbContext _db;

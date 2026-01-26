@@ -1,5 +1,31 @@
 [
   {
+    "ContainingType": "TentotalEnglish.Api.Controllers.AuthController",
+    "Method": "Login",
+    "RelativePath": "api/Auth/login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "req",
+        "Type": "TentotalEnglish.Api.Models.LoginRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "TentotalEnglish.Api.Models.LoginResponse",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "TentotalEnglish.Api.Controllers.CoursesController",
     "Method": "GetAll",
     "RelativePath": "api/Courses",
@@ -231,6 +257,16 @@
         "IsRequired": true
       }
     ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "TentotalEnglish.Api.Controllers.MeController",
+    "Method": "Get",
+    "RelativePath": "api/Me",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
     "ReturnTypes": []
   },
   {
