@@ -50,7 +50,7 @@ public class PaymentsController : ControllerBase
         var payment = new Payment 
         {
             StudentId = req.StudentId,
-            Amount = req.Amount, 
+            Amount = req.Amount,  
             Currency = currency,
             Notes = string.IsNullOrWhiteSpace(req.Notes) ? null : req.Notes.Trim(),
             PaidAtUtc = DateTime.UtcNow,
