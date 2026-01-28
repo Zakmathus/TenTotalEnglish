@@ -49,7 +49,7 @@ public class PaymentsController : ControllerBase
 
         var payment = new Payment 
         {
-            StudentId = req.StudentId,
+            StudentId = req.StudentId, 
             Amount = req.Amount,  
             Currency = currency,
             Notes = string.IsNullOrWhiteSpace(req.Notes) ? null : req.Notes.Trim(),
