@@ -27,7 +27,7 @@ export function PaymentsPage() {
   }, [students]);
 
   const loadStudents = async () => {
-    const res = await http.get<Student[]>("/api/students");
+    const res = await http.get<Student[]>("/students");
     setStudents(res.data);
   };
 
@@ -35,7 +35,7 @@ export function PaymentsPage() {
     const params: any = {};
     if (studentId) params.studentId = studentId;
 
-    const res = await http.get<Payment[]>("/api/payments", { params });
+    const res = await http.get<Payment[]>("/payments", { params });
     setItems(res.data);
   };
 
@@ -54,7 +54,7 @@ export function PaymentsPage() {
       if (!studentId) return setError("Select a student");
       if (amount <= 0) return setError("Amount must be > 0");
 
-      await http.post("/api/payments", { studentId, amount, currency, notes });
+      await http.post("/payments", { studentId, amount, currency, notes });
       await loadPayments();
     } catch (err: any) {
       setError(err?.response?.data ?? "Error creating payment");

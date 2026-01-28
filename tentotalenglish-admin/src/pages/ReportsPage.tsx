@@ -19,14 +19,14 @@ export function ReportsPage() {
   }, [students]);
 
   const loadStudents = async () => {
-    const res = await http.get<Student[]>("/api/students");
+    const res = await http.get<Student[]>("/students");
     setStudents(res.data);
   };
 
   const loadGlobal = async () => {
     const params: any = {};
     if (year.trim()) params.year = Number(year);
-    const res = await http.get<MonthlyPaymentsReportItem[]>("/api/reports/payments/monthly", { params });
+    const res = await http.get<MonthlyPaymentsReportItem[]>("/reports/payments/monthly", { params });
     setGlobalRows(res.data);
   };
 
@@ -37,7 +37,7 @@ export function ReportsPage() {
     }
     const params: any = { studentId };
     if (year.trim()) params.year = Number(year);
-    const res = await http.get<MonthlyPaymentsReportItem[]>("/api/reports/payments/monthly-by-student", { params });
+    const res = await http.get<MonthlyPaymentsReportItem[]>("/reports/payments/monthly-by-student", { params });
     setStudentRows(res.data);
   };
 

@@ -24,7 +24,7 @@ export function CoursesPage() {
   const [editMonthlyPrice, setEditMonthlyPrice] = useState<number>(0);
 
   const load = async () => {
-    const res = await http.get<Course[]>("/api/courses");
+    const res = await http.get<Course[]>("/courses");
     setItems(res.data);
   };
 
@@ -35,7 +35,7 @@ export function CoursesPage() {
   const create = async () => {
     setError(null);
     try {
-      await http.post("/api/courses", {
+      await http.post("/courses", {
         name,
         description: description.trim() ? description : null,
         monthlyPrice,

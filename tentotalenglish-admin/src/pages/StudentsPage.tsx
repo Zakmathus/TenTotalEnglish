@@ -24,7 +24,7 @@ export function StudentsPage() {
   const [editEmail, setEditEmail] = useState("");
 
   const load = async () => {
-    const res = await http.get<Student[]>("/api/students");
+    const res = await http.get<Student[]>("/students");
     setItems(res.data);
   };
 
@@ -35,7 +35,7 @@ export function StudentsPage() {
   const create = async () => {
     setError(null);
     try {
-      await http.post("/api/students", { firstName, lastName, email });
+      await http.post("/students", { firstName, lastName, email });
       setFirstName("");
       setLastName("");
       setEmail("");

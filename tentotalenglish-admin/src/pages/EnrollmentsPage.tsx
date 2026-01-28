@@ -34,12 +34,12 @@ export function EnrollmentsPage() {
   }, [courses]);
 
   const loadStudents = async () => {
-    const res = await http.get<Student[]>("/api/students");
+    const res = await http.get<Student[]>("/students");
     setStudents(res.data);
   };
 
   const loadCourses = async () => {
-    const res = await http.get<Course[]>("/api/courses");
+    const res = await http.get<Course[]>("/courses");
     setCourses(res.data);
   };
 
@@ -49,7 +49,7 @@ export function EnrollmentsPage() {
     if (courseId) params.courseId = courseId;
     if (activeOnly) params.activeOnly = true;
 
-    const res = await http.get<Enrollment[]>("/api/enrollments", { params });
+    const res = await http.get<Enrollment[]>("/enrollments", { params });
     setEnrollments(res.data);
   };
 
@@ -69,7 +69,7 @@ export function EnrollmentsPage() {
       if (!studentId) return setError("Select a student");
       if (!courseId) return setError("Select a course");
 
-      await http.post("/api/enrollments", { studentId, courseId });
+      await http.post("/enrollments", { studentId, courseId });
       await loadEnrollments();
     } catch (err: any) {
       setError(err?.response?.data ?? "Error creating enrollment");

@@ -24,7 +24,7 @@ export function TeachersPage() {
   const [editEmail, setEditEmail] = useState("");
 
   const load = async () => {
-    const res = await http.get<Teacher[]>("/api/teachers");
+    const res = await http.get<Teacher[]>("/teachers");
     setItems(res.data);
   };
 
@@ -35,7 +35,7 @@ export function TeachersPage() {
   const create = async () => {
     setError(null);
     try {
-      await http.post("/api/teachers", { firstName, lastName, email });
+      await http.post("/teachers", { firstName, lastName, email });
       setFirstName("");
       setLastName("");
       setEmail("");

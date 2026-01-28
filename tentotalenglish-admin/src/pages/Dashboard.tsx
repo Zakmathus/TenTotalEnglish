@@ -5,7 +5,7 @@ export function Dashboard() {
   const [me, setMe] = useState<any>(null);
 
   useEffect(() => {
-    http.get("/api/me").then((r) => setMe(r.data)).catch(() => setMe(null));
+    http.get("/me").then((r) => setMe(r.data)).catch(() => setMe(null));
   }, []);
 
   return (
