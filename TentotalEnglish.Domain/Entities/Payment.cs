@@ -5,7 +5,7 @@ public class Payment
     public Guid Id { get; set; } = Guid.NewGuid();
 
     public Guid StudentId { get; set; }
-    public required Student Student { get; set; }
+    public Student Student { get; set; } = null!;
 
     public decimal Amount { get; set; }
     public string Currency { get; set; } = "MXN";

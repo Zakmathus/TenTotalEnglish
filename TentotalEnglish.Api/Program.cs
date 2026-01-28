@@ -47,10 +47,15 @@ builder.Services.AddSwaggerGen(c =>
 
 builder.Services.AddCors(o =>
 {
-    o.AddPolicy("dev", p =>
-        p.WithOrigins("http://localhost:5173")
-         .AllowAnyHeader()
-         .AllowAnyMethod());
+    o.AddPolicy("cors", p =>
+        p.WithOrigins(
+            "http://localhost:5173",
+            "https://www.tentotalenglish.com",
+            "https://tentotalenglish.com"
+        )
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+    );
 });
 
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -109,10 +114,13 @@ if (app.Environment.IsDevelopment())
 
 
 
-app.UseCors("dev");
+app.UseRouting();
+
+app.UseCors("cors");
 
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseHttpsRedirection();
+
 app.MapControllers();
+
 app.Run();

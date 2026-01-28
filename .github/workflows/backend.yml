@@ -1,0 +1,112 @@
+name: Backend CI/CD (ECR -> ECS)
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - "TentotalEnglish.Api/**"
+      - "TentotalEnglish.Application/**"
+      - "TentotalEnglish.Domain/**"
+      - "TentotalEnglish.Infrastructure/**"
+      - "Dockerfile"
+      - ".github/workflows/backend.yml"
+
+env:
+  AWS_REGION: us-west-2
+  ECR_REPO: tentotalenglish-api
+  CLUSTER_NAME: tentotalenglish-prod
+  SERVICE_NAME: tentotalenglish-api
+  CONTAINER_NAME: api
+  TASK_FAMILY: tentotalenglish-api
+
+jobs:
+  build_test_push_deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: Test
+        run: dotnet test -c Release
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build, tag, and push image to ECR
+        env:
+          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: sha-${{ github.sha }}
+        run: |
+          docker build -t $REGISTRY/${{ env.ECR_REPO }}:$IMAGE_TAG .
+          docker push $REGISTRY/${{ env.ECR_REPO }}:$IMAGE_TAG
+          echo "IMAGE_URI=$REGISTRY/${{ env.ECR_REPO }}:$IMAGE_TAG" >> $GITHUB_ENV
+
+      - name: Fetch current task definition
+        run: |
+          aws ecs describe-task-definition \
+            --task-definition ${{ env.TASK_FAMILY }} \
+            --query taskDefinition > taskdef.json
+
+      - name: Render new task definition with new image
+        run: |
+          python - << 'PY'
+          import json, os
+          td = json.load(open("taskdef.json"))
+          # Keep only fields allowed for register-task-definition
+          keep = [
+            "family","taskRoleArn","executionRoleArn","networkMode",
+            "containerDefinitions","volumes","placementConstraints",
+            "requiresCompatibilities","cpu","memory","pidMode","ipcMode",
+            "proxyConfiguration","inferenceAccelerators","ephemeralStorage",
+            "runtimePlatform"
+          ]
+          new_td = {k: td.get(k) for k in keep if k in td}
+          # Update container image
+          img = os.environ["IMAGE_URI"]
+          for c in new_td["containerDefinitions"]:
+            if c["name"] == os.environ["CONTAINER_NAME"]:
+              c["image"] = img
+          json.dump(new_td, open("taskdef-rendered.json","w"), indent=2)
+          print("Updated image to:", img)
+          PY
+
+      - name: Register new task definition revision
+        run: |
+          OUT=$(aws ecs register-task-definition --cli-input-json file://taskdef-rendered.json)
+          echo "$OUT" > reg.json
+          ARN=$(python - << 'PY'
+          import json
+          print(json.load(open("reg.json"))["taskDefinition"]["taskDefinitionArn"])
+          PY
+          )
+          echo "NEW_TASK_DEF_ARN=$ARN" >> $GITHUB_ENV
+
+      - name: Deploy ECS service (rolling)
+        run: |
+          aws ecs update-service \
+            --cluster ${{ env.CLUSTER_NAME }} \
+            --service ${{ env.SERVICE_NAME }} \
+            --task-definition ${{ env.NEW_TASK_DEF_ARN }} \
+            --force-new-deployment
+
+      - name: Wait for service stability
+        run: |
+          aws ecs wait services-stable \
+            --cluster ${{ env.CLUSTER_NAME }} \
+            --services ${{ env.SERVICE_NAME }}

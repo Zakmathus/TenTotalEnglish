@@ -47,14 +47,13 @@ public class PaymentsController : ControllerBase
 
         var currency = string.IsNullOrWhiteSpace(req.Currency) ? "MXN" : req.Currency!.Trim().ToUpperInvariant();
 
-        var payment = new Payment
+        var payment = new Payment 
         {
             StudentId = req.StudentId,
-            Amount = req.Amount,
+            Amount = req.Amount, 
             Currency = currency,
             Notes = string.IsNullOrWhiteSpace(req.Notes) ? null : req.Notes.Trim(),
             PaidAtUtc = DateTime.UtcNow,
-            Student = new Student() // Initialize the required 'Student' property
         };
 
 
