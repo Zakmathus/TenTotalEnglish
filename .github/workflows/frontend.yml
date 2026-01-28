@@ -11,7 +11,7 @@ env:
   AWS_REGION: us-west-2
   FRONTEND_DIR: tentotalenglish-admin
   # Prod API base URL:
-  VITE_API_BASE_URL: https://tentotalenglish.com
+  VITE_API_BASE_URL: /api
 
 jobs:
   build_upload_invalidate:
