@@ -1,0 +1,449 @@
+:root{
+  --bg: #eef2f9;
+  --card: #ffffff;
+  --text: #0f172a;
+  --muted: #64748b;
+
+  --sidebar: #101c4c;
+  --sidebar-2: #0d1740;
+
+  --pill: rgba(255,255,255,.10);
+  --pill-active: rgba(255,255,255,.18);
+
+  --shadow: 0 10px 30px rgba(15, 23, 42, .08);
+  --radius: 18px;
+}
+
+*{ box-sizing: border-box; }
+
+body{
+  margin:0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* ================= LAYOUT ================= */
+
+.app-shell{
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.app-main{
+  display:flex;
+  flex-direction:column;
+  width: 100%;
+  min-width: 0; /* 🔥 important: avoids "empty space" / overflow bugs */
+}
+
+.app-content{
+  padding: 22px;
+  width: 100%;
+  min-width: 0;
+}
+
+/* ================= SIDEBAR ================= */
+
+.sidebar{
+  background: radial-gradient(1200px 800px at 30% 20%, #1b2a74 0%, var(--sidebar) 55%, var(--sidebar-2) 100%);
+  color: #fff;
+  padding: 20px;
+  display:flex;
+  flex-direction:column;
+}
+
+.sidebar-brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding: 12px;
+  border-radius: var(--radius);
+  background: rgba(255,255,255,.06);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.06);
+}
+
+.brand-logo{
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background:#fff;
+  padding:4px;
+  object-fit:contain;
+}
+
+.brand-title{
+  font-weight:800;
+  letter-spacing:2px;
+  font-size:18px;
+  line-height:18px;
+}
+
+.brand-subtitle{
+  opacity:.85;
+  letter-spacing:2px;
+  font-weight:700;
+  font-size:14px;
+}
+
+.sidebar-nav{
+  margin-top: 18px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.nav-item{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  text-decoration:none;
+  color:#fff;
+  background: var(--pill);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.06);
+  transition: .15s ease;
+}
+
+.nav-item:hover{
+  transform: translateY(-1px);
+  background: var(--pill-active);
+}
+
+.nav-item.active{
+  background: rgba(255,255,255,.22);
+}
+
+.nav-dot{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background: rgba(255,255,255,.55);
+}
+
+/* Sidebar footer */
+.sidebar-footer{
+  margin-top:auto;
+  padding-top: 12px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.footer-pill{
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(255,255,255,.10);
+  text-align:center;
+  opacity:.9;
+  cursor:pointer;
+}
+
+.footer-pill.logout{
+  background: rgba(239,68,68,.18);
+  color: #fff;
+  font-weight: 900;
+}
+
+.footer-pill.logout:hover{
+  background: rgba(239,68,68,.28);
+}
+
+/* ================= TOPBAR ================= */
+
+.topbar{
+  height: 76px;
+  background: var(--card);
+  display:flex;
+  align-items:center;
+  padding: 0 22px;
+  box-shadow: var(--shadow);
+  width: 100%;
+  min-width: 0;
+  gap: 12px;
+
+  justify-content: flex-start; /* 🔥 en vez de space-between */
+}
+
+/* hamburger button lives here */
+.icon-btn{
+  width: 40px;
+  height: 40px;
+  border:none;
+  background: #f2f5ff;
+  border-radius: 14px;
+  cursor:pointer;
+  box-shadow: inset 0 0 0 1px rgba(15,23,42,.06);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.topbar-right{
+  display:flex;
+  align-items:center;
+  gap:12px;
+
+  margin-left: auto;     /* 🔥 pushes to far right */
+  flex-shrink: 0;
+}
+
+.user-chip{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding: 8px 10px;
+  border-radius: 16px;
+  background: #f2f5ff;
+  box-shadow: inset 0 0 0 1px rgba(15,23,42,.06);
+}
+
+.avatar{
+  width: 38px;
+  height: 38px;
+  display:grid;
+  place-items:center;
+  background:#fff;
+  border-radius: 14px;
+}
+
+.user-name{
+  font-weight:800;
+  font-size:13px;
+  line-height:14px;
+}
+
+.user-role{
+  color: var(--muted);
+  font-size:12px;
+}
+
+/* user dropdown (if you still use it somewhere) */
+.user-wrapper{ position: relative; }
+
+.user-menu{
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 20px 40px rgba(15,23,42,.15);
+  padding: 8px;
+  min-width: 140px;
+  z-index: 50;
+}
+
+.logout-btn{
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: none;
+  background: #f8fafc;
+  font-weight: 700;
+  cursor: pointer;
+  transition: .15s ease;
+}
+
+.logout-btn:hover{
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+/* ================= UI BASE ================= */
+
+input, button, select, textarea { font: inherit; }
+
+.ui-input{
+  width: 100%;
+  height: 42px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(15,23,42,.10);
+  background: #ffffff;
+  color: var(--text);
+  outline: none;
+  box-shadow: 0 10px 20px rgba(15,23,42,.04);
+}
+
+.ui-input::placeholder{ color: rgba(100,116,139,.9); }
+
+.ui-input:focus{
+  border-color: rgba(53,91,255,.35);
+  box-shadow: 0 0 0 4px rgba(53,91,255,.12);
+}
+
+.ui-btn{
+  height: 42px;
+  padding: 0 14px;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+  font-weight: 800;
+  background: #111827;
+  color: #fff;
+}
+
+.ui-btn:hover{ filter: brightness(1.06); }
+
+.ui-btn.secondary{
+  background: #f2f5ff;
+  color: var(--text);
+  box-shadow: inset 0 0 0 1px rgba(15,23,42,.06);
+}
+
+.ui-btn.danger{ background: #ef4444; }
+
+/* ================= ICON BUTTONS (lucide-safe) ================= */
+
+.icon-action{
+  width: 38px;
+  height: 38px;
+  border-radius: 14px;
+  border: none;
+  padding: 0;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+  background: #f2f5ff;
+  color: #0f172a;
+  box-shadow: inset 0 0 0 1px rgba(15,23,42,.08);
+  transition: .15s ease;
+}
+
+.icon-action svg{
+  display:block;
+  stroke: currentColor;
+}
+
+.icon-action:hover{
+  transform: translateY(-1px);
+  background: #e8edff;
+}
+
+.icon-action.primary{
+  background: #355bff;
+  color: #fff;
+}
+
+.icon-action.primary:hover{ background: #2748d9; }
+
+.icon-action.danger{
+  background: rgba(239,68,68,.14);
+  color: #b91c1c;
+}
+
+.icon-action.danger:hover{ background: rgba(239,68,68,.22); }
+
+/* ================= CARDS / TABLE ================= */
+
+.ui-card{
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 16px;
+  width: 100%;
+}
+
+.table-wrap{ overflow-x: auto; width: 100%; }
+
+.ui-table{
+  width: 100%;
+  min-width: 760px;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+}
+
+.ui-table th{
+  text-align: left;
+  color: var(--muted);
+  font-weight: 900;
+  padding: 10px 12px;
+}
+
+.ui-table td{ padding: 12px; }
+
+.ui-table tbody tr{ background: #f6f8ff; }
+
+.ui-table tbody tr td:first-child{ border-radius: 16px 0 0 16px; }
+.ui-table tbody tr td:last-child{ border-radius: 0 16px 16px 0; }
+
+.ui-table .empty{
+  padding: 18px;
+  color: var(--muted);
+  font-weight: 800;
+  background: transparent;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 980px){
+  .app-shell{ grid-template-columns: 1fr; }
+
+  .sidebar{
+    position: fixed;
+    inset: 0 auto 0 0;
+    width: 280px;
+    transform: translateX(-110%);
+    transition: .2s ease;
+    z-index: 100;
+  }
+
+  .sidebar.open{ transform: translateX(0); }
+
+  .overlay{
+    position: fixed;
+    inset: 0;
+    background: rgba(2,6,23,.35);
+    z-index: 90;
+  }
+
+  .topbar{ padding: 0 14px; }
+
+  .search{ max-width: none; }
+}
+/* Force topbar to fill main column */
+.app-main { width: 100%; min-width: 0; }
+.topbar { width: 100% !important; max-width: none !important; }
+.topbar-right { margin-left: auto; }
+.search { flex: 1; max-width: none; min-width: 0; }
+/* ===== MOBILE FIX ===== */
+@media (max-width: 640px){
+
+  body{
+    overflow-x: hidden;
+  }
+
+  .app-shell{
+    grid-template-columns: 1fr; /* 🔥 no sidebar column */
+  }
+
+  .app-main{
+    width: 100%;
+  }
+
+  .app-content{
+    padding: 14px;
+    width: 100%;
+  }
+
+  /* cards & tables should not overflow */
+  .ui-card{
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .table-wrap{
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .ui-table{
+    min-width: 520px; /* 👈 scroll horizontal controlado */
+  }
+}
