@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { http } from "../api/http";
+import "./students.css";
 
 type Student = {
   id: string;
@@ -7,6 +8,62 @@ type Student = {
   lastName: string;
   email: string;
 };
+
+function PencilIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        d="M12 20h9"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <path
+        d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5Z"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function TrashIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        d="M3 6h18"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <path
+        d="M8 6V4h8v2"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <path
+        d="M6 6l1 16h10l1-16"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M10 11v6M14 11v6"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
 
 export function StudentsPage() {
   const [items, setItems] = useState<Student[]>([]);
@@ -92,77 +149,157 @@ export function StudentsPage() {
 
   const isEditing = (id: string) => editingId === id;
 
-  return (
-    <div>
-      <h2>Students</h2>
+  // UI-only footer text (no pagination logic yet)
+  const footerText = useMemo(() => {
+    const total = items.length;
+    return `Showing ${total} of ${total} results`;
+  }, [items.length]);
 
-      {/* Create */}
-      <div style={{ display: "flex", gap: 8, marginBottom: 12, flexWrap: "wrap" }}>
-        <input value={firstName} onChange={(e) => setFirstName(e.target.value)} placeholder="First name" />
-        <input value={lastName} onChange={(e) => setLastName(e.target.value)} placeholder="Last name" />
-        <input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" />
-        <button onClick={create}>Add</button>
+  return (
+    <div className="students-page">
+      <div className="students-head">
+        <h1 className="students-title">Students</h1>
       </div>
 
-      {error && <div style={{ color: "crimson", marginBottom: 12 }}>{String(error)}</div>}
+      <div className="students-card">
+        {/* Create */}
+        <div className="students-create">
+          <input
+            className="students-input"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+            placeholder="First name"
+          />
+          <input
+            className="students-input"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+            placeholder="Last name"
+          />
+          <input
+            className="students-input"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Email"
+          />
 
-      <table cellPadding={8} style={{ borderCollapse: "collapse", width: "100%" }}>
-        <thead>
-          <tr>
-            <th align="left">First</th>
-            <th align="left">Last</th>
-            <th align="left">Email</th>
-            <th align="left">Id</th>
-            <th align="left">Actions</th>
-          </tr>
-        </thead>
+          <button className="students-add" onClick={create}>
+            Add
+          </button>
+        </div>
 
-        <tbody>
-          {items.map((s) => (
-            <tr key={s.id} style={{ borderTop: "1px solid #eee" }}>
-              <td>
-                {isEditing(s.id) ? (
-                  <input value={editFirstName} onChange={(e) => setEditFirstName(e.target.value)} />
-                ) : (
-                  s.firstName
-                )}
-              </td>
+        {error && <div className="students-error">{String(error)}</div>}
 
-              <td>
-                {isEditing(s.id) ? (
-                  <input value={editLastName} onChange={(e) => setEditLastName(e.target.value)} />
-                ) : (
-                  s.lastName
-                )}
-              </td>
+        <div className="students-table-wrap">
+          <table className="students-table">
+            <thead>
+              <tr>
+                <th>First</th>
+                <th>Last</th>
+                <th>Email</th>
+                <th className="mono">ID</th>
+                <th className="right">Actions</th>
+              </tr>
+            </thead>
 
-              <td>
-                {isEditing(s.id) ? (
-                  <input value={editEmail} onChange={(e) => setEditEmail(e.target.value)} />
-                ) : (
-                  s.email
-                )}
-              </td>
+            <tbody>
+              {items.map((s) => (
+                <tr key={s.id}>
+                  <td>
+                    {isEditing(s.id) ? (
+                      <input
+                        className="students-cell-input"
+                        value={editFirstName}
+                        onChange={(e) => setEditFirstName(e.target.value)}
+                      />
+                    ) : (
+                      s.firstName
+                    )}
+                  </td>
 
-              <td style={{ fontFamily: "monospace" }}>{s.id}</td>
+                  <td>
+                    {isEditing(s.id) ? (
+                      <input
+                        className="students-cell-input"
+                        value={editLastName}
+                        onChange={(e) => setEditLastName(e.target.value)}
+                      />
+                    ) : (
+                      s.lastName
+                    )}
+                  </td>
 
-              <td style={{ display: "flex", gap: 8 }}>
-                {isEditing(s.id) ? (
-                  <>
-                    <button onClick={saveEdit}>Save</button>
-                    <button onClick={cancelEdit}>Cancel</button>
-                  </>
-                ) : (
-                  <>
-                    <button onClick={() => startEdit(s)}>Edit</button>
-                    <button onClick={() => remove(s.id)}>Delete</button>
-                  </>
-                )}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+                  <td>
+                    {isEditing(s.id) ? (
+                      <input
+                        className="students-cell-input"
+                        value={editEmail}
+                        onChange={(e) => setEditEmail(e.target.value)}
+                      />
+                    ) : (
+                      s.email
+                    )}
+                  </td>
+
+                  <td className="mono">{s.id}</td>
+
+                  <td className="right">
+                    <div className="students-actions">
+                      {isEditing(s.id) ? (
+                        <>
+                          <button className="students-action secondary" onClick={saveEdit}>
+                            Save
+                          </button>
+                          <button className="students-action ghost" onClick={cancelEdit}>
+                            Cancel
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          <button className="students-action edit" onClick={() => startEdit(s)}>
+                            <PencilIcon />
+                            Edit
+                          </button>
+                          <button className="students-action delete" onClick={() => remove(s.id)}>
+                            <TrashIcon />
+                            Delete
+                          </button>
+                        </>
+                      )}
+                    </div>
+                  </td>
+                </tr>
+              ))}
+
+              {items.length === 0 && (
+                <tr>
+                  <td className="students-empty" colSpan={5}>
+                    No students found.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+
+        <div className="students-footer">
+          <div className="students-foot-left">{footerText}</div>
+
+          <div className="students-pager">
+            <button className="pager-btn" disabled title="Previous page">
+              ‹
+            </button>
+            <div className="pager-mid">
+              <span className="pager-page">1</span>
+              <span className="pager-of">of</span>
+              <span className="pager-total">1</span>
+            </div>
+            <button className="pager-btn" disabled title="Next page">
+              ›
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
