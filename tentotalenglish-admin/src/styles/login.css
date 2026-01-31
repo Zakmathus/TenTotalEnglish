@@ -1,0 +1,239 @@
+/* ========== BACKGROUND (star field + navy gradient) ========== */
+.tte-login{
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+
+  background:
+    radial-gradient(1100px 760px at 50% 18%, rgba(245,158,11,.12), transparent 64%),
+    radial-gradient(1400px 900px at 50% 55%, rgba(20,43,95,.58), transparent 66%),
+    linear-gradient(135deg, #06142E, #0B1C3D 55%, #142B5F) !important;
+}
+
+/* Stars */
+.tte-login::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+
+  background-image:
+    radial-gradient(rgba(255,255,255,.24) 1px, transparent 1px),
+    radial-gradient(rgba(255,255,255,.14) 1px, transparent 1px);
+
+  background-size: 120px 120px, 200px 200px;
+  background-position: 0 0, 80px 100px;
+
+  opacity:.65;
+  filter: blur(.25px);
+}
+
+/* wrapper */
+.tte-login-inner{
+  width: 100%;
+  max-width: 980px;
+  position: relative;
+  z-index: 1;
+
+  display: grid;
+  justify-items: center;
+  gap: 18px;
+  text-align: center;
+}
+
+/* hero */
+.tte-hero{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap: 10px;
+}
+
+/* ========== LOGO: más parecido al mock (glow suave, menos sombra negra) ========== */
+.tte-logo-wrap{
+  position: relative;
+  display:grid;
+  place-items:center;
+
+  width: 96px;
+  height: 96px;
+  border-radius: 20px;
+
+  background: rgba(255,255,255,.08);
+  box-shadow: 0 14px 28px rgba(0,0,0,.25);
+  overflow:hidden;
+}
+
+.tte-logo-wrap::before{
+  content:"";
+  position:absolute;
+  inset:-70px;
+  background: radial-gradient(circle, rgba(245,158,11,.38), transparent 62%);
+  opacity:.75;
+}
+
+.tte-hero-logo{
+  position: relative;
+  width: 66px;
+  height: 66px;
+  object-fit: contain;
+}
+
+/* Headings */
+.tte-welcome{
+  margin: 0;
+  color:#fff;
+  font-size: 42px;
+  line-height: 1.12;
+  font-weight: 900;
+  letter-spacing: .2px;
+  text-shadow: 0 10px 26px rgba(0,0,0,.28);
+}
+
+.tte-sub{
+  margin:0;
+  color: rgba(255,255,255,.80);
+  font-size: 13px;
+}
+
+/* ========== CARD (más aire + borde suave tipo mock) ========== */
+.tte-card{
+  width: 100%;
+  max-width: 540px;
+
+  background: #FFFFFF !important;
+  color: #0F172A;
+
+  border-radius: 14px;
+  padding: 18px 22px 18px;
+
+  box-shadow: 0 24px 90px rgba(0,0,0,.35);
+  border: 1px solid rgba(255,255,255,.65);
+}
+
+.tte-card-title{
+  margin: 2px 0 14px;
+  font-size: 18px;
+  font-weight: 900;
+  color: #0F172A;
+}
+
+/* Form */
+.tte-form{
+  display:flex;
+  flex-direction:column;
+  gap: 12px;
+  margin: 0;
+}
+
+/* Inputs: un poco más altos y suaves */
+.tte-field{
+  display:flex;
+  align-items:center;
+  gap: 10px;
+
+  width: 100%;
+  padding: 13px 14px;
+
+  border: 1px solid #E8EDF3;
+  border-radius: 12px;
+  background: #fff;
+
+  overflow: hidden;
+}
+
+.tte-field:focus-within{
+  border-color: rgba(245,158,11,.90);
+  box-shadow: 0 0 0 4px rgba(245,158,11,.16);
+}
+
+.tte-icon{
+  color:#94A3B8;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex: 0 0 auto;
+}
+
+.tte-input{
+  flex: 1 1 auto;
+  min-width: 0;
+  width: 100%;
+
+  border: none !important;
+  outline: none;
+  background: transparent;
+
+  padding: 0 !important;
+  margin: 0 !important;
+
+  font-size: 14px;
+  color:#0F172A;
+}
+
+/* Button: más alto y hover */
+.tte-btn{
+  width: 100%;
+  padding: 14px 14px;
+
+  border: none !important;
+  border-radius: 12px;
+
+  background: linear-gradient(180deg, #F59E0B, #E58C05) !important;
+  color: #fff !important;
+
+  font-weight: 900;
+  font-size: 15px;
+
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap: 10px;
+
+  box-shadow: 0 16px 34px rgba(245,158,11,.26);
+  transition: transform .12s ease, filter .12s ease;
+}
+
+.tte-btn:hover{
+  filter: brightness(1.02);
+  transform: translateY(-1px);
+}
+
+.tte-btn:active{
+  transform: translateY(0px);
+}
+
+.tte-btn:disabled{
+  opacity:.7;
+  cursor:not-allowed;
+  transform: none;
+}
+
+.tte-btn-arrow{
+  display:inline-flex;
+}
+
+/* footer text */
+.tte-help{
+  margin-top: 10px;
+  font-size: 12px;
+  color:#64748B;
+}
+
+.tte-error{
+  color:#DC2626;
+  font-size: 13px;
+  margin-top: 2px;
+}
+
+/* Mobile */
+@media (max-width: 560px){
+  .tte-welcome{ font-size: 30px; }
+  .tte-card{ padding: 18px; }
+  .tte-card-title{ font-size: 17px; }
+}

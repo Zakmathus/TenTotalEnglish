@@ -451,6 +451,18 @@
         }
       }
     },
+    "/health": {
+      "get": {
+        "tags": [
+          "Health"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Me": {
       "get": {
         "tags": [
@@ -1320,9 +1332,6 @@
         "additionalProperties": false
       },
       "Payment": {
-        "required": [
-          "student"
-        ],
         "type": "object",
         "properties": {
           "id": {

@@ -60,14 +60,14 @@ resource "aws_cloudfront_distribution" "frontend" {
     viewer_protocol_policy = "redirect-to-https"
 
     allowed_methods = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
-    cached_methods  = ["GET", "HEAD"]
+    cached_methods = ["GET", "HEAD", "OPTIONS"]
 
     compress = true
 
     forwarded_values {
       query_string = true
       headers      = ["Authorization", "Content-Type", "Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers"]
-      cookies { forward = "all" }
+      cookies { forward = "none" }
     }
 
     min_ttl     = 0

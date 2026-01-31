@@ -1,0 +1,81 @@
+/* Pantalla completa con fondo del logo */
+.tte-auth {
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--tte-primary), var(--tte-primary-2));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+/* Card */
+.tte-auth-card {
+  width: 100%;
+  max-width: 420px;
+  background: var(--tte-card);
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: 0 14px 40px rgba(0,0,0,.18);
+}
+
+/* Header */
+.tte-auth-head {
+  text-align: center;
+  margin-bottom: 18px;
+}
+.tte-auth-head img {
+  width: 88px;
+  height: auto;
+}
+.tte-auth-head h2 {
+  margin: 10px 0 4px;
+  font-size: 22px;
+}
+.tte-auth-head p {
+  margin: 0;
+  color: var(--tte-muted);
+  font-size: 14px;
+}
+
+/* Form */
+.tte-auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tte-input {
+  width: 100%;
+  padding: 12px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--tte-border);
+  outline: none;
+  background: #fff;
+}
+.tte-input:focus {
+  border-color: rgba(245,158,11,.8);
+  box-shadow: 0 0 0 4px rgba(245,158,11,.15);
+}
+
+/* Button */
+.tte-btn {
+  width: 100%;
+  padding: 12px 14px;
+  border: none;
+  border-radius: 10px;
+  background: var(--tte-accent);
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+}
+.tte-btn:disabled {
+  opacity: .7;
+  cursor: not-allowed;
+}
+
+/* Error */
+.tte-error {
+  color: var(--tte-danger);
+  font-size: 13px;
+  margin-top: 4px;
+}

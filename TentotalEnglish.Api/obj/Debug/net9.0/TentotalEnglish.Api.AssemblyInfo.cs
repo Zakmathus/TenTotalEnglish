@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TentotalEnglish.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c837e85b0085faa662548c376d74e44f12ad0cdf")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+905a819ccdfacd89cb1b8f24598953e7c41d9546")]
 [assembly: System.Reflection.AssemblyProductAttribute("TentotalEnglish.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TentotalEnglish.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

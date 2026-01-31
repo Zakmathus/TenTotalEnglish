@@ -11,7 +11,6 @@ export function Dashboard() {
   return (
     <div>
       <h2>Dashboard</h2>
-      <h1>this</h1>
       <pre>{JSON.stringify(me, null, 2)}</pre>
     </div>
   );
