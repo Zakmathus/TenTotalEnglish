@@ -75,7 +75,7 @@ data "aws_iam_policy_document" "github_actions_permissions" {
 
   # PassRole para que ECS use el execution role que ya creamos
   statement {
-    actions = ["iam:PassRole"]
+    actions   = ["iam:PassRole"]
     resources = [aws_iam_role.ecs_task_execution.arn]
   }
 

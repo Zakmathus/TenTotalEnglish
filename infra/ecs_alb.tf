@@ -45,7 +45,7 @@ resource "aws_iam_role_policy_attachment" "ecs_task_exec_policy" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
 }
 
-# Permitir leer secretos (DB + API)
+# Permitir leer secretos (DB + API + ADMIN)
 data "aws_iam_policy_document" "secrets_read" {
   statement {
     actions = [
@@ -54,7 +54,8 @@ data "aws_iam_policy_document" "secrets_read" {
     ]
     resources = [
       aws_secretsmanager_secret.db.arn,
-      aws_secretsmanager_secret.api.arn
+      aws_secretsmanager_secret.api.arn,
+      aws_secretsmanager_secret.admin.arn
     ]
   }
 }
@@ -78,18 +79,20 @@ resource "aws_security_group" "alb" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
   ingress {
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
   tags = { Name = "tentotalenglish-alb-sg" }
 }
 
@@ -122,6 +125,7 @@ resource "aws_lb_target_group" "api" {
   tags = { Name = "tentotalenglish-api-tg" }
 }
 
+# HTTP -> HTTPS redirect (está bien si tu listener 443 ya funciona)
 resource "aws_lb_listener" "http" {
   load_balancer_arn = aws_lb.api.arn
   port              = 80
@@ -150,13 +154,11 @@ resource "aws_lb_listener" "https" {
   }
 }
 
-
 # ---------- ECS ----------
 resource "aws_ecs_cluster" "this" {
   name = "tentotalenglish-prod"
 }
 
-# Repo URL desde ECR creado en Paso 6
 resource "aws_ecs_task_definition" "api" {
   family                   = "tentotalenglish-api"
   requires_compatibilities = ["FARGATE"]
@@ -180,7 +182,10 @@ resource "aws_ecs_task_definition" "api" {
         { name = "ConnectionStrings__Postgres", valueFrom = "${aws_secretsmanager_secret.api.arn}:ConnectionStrings__Postgres::" },
         { name = "Jwt__Issuer", valueFrom = "${aws_secretsmanager_secret.api.arn}:Jwt__Issuer::" },
         { name = "Jwt__Audience", valueFrom = "${aws_secretsmanager_secret.api.arn}:Jwt__Audience::" },
-        { name = "Jwt__Key", valueFrom = "${aws_secretsmanager_secret.api.arn}:Jwt__Key::" }
+        { name = "Jwt__Key", valueFrom = "${aws_secretsmanager_secret.api.arn}:Jwt__Key::" },
+
+        { name = "Admin__Username", valueFrom = "${aws_secretsmanager_secret.admin.arn}:Admin__Username::" },
+        { name = "Admin__Password", valueFrom = "${aws_secretsmanager_secret.admin.arn}:Admin__Password::" }
       ],
       logConfiguration = {
         logDriver = "awslogs",
@@ -194,10 +199,16 @@ resource "aws_ecs_task_definition" "api" {
   ])
 }
 
+# ✅ Esto evita el downgrade :3 -> :1.
+# Toma siempre la ÚLTIMA task definition activa de ese family.
+data "aws_ecs_task_definition" "api_latest" {
+  task_definition = aws_ecs_task_definition.api.family
+}
+
 resource "aws_ecs_service" "api" {
   name            = "tentotalenglish-api"
   cluster         = aws_ecs_cluster.this.id
-  task_definition = aws_ecs_task_definition.api.arn
+  task_definition = data.aws_ecs_task_definition.api_latest.arn
   desired_count   = 1
   launch_type     = "FARGATE"
 

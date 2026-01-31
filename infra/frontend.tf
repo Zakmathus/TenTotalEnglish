@@ -39,7 +39,7 @@ resource "aws_cloudfront_distribution" "frontend" {
     origin_id                = "s3-frontend"
     origin_access_control_id = aws_cloudfront_origin_access_control.frontend.id
   }
-  
+
   # ✅ Origin 2: ALB (API)
   origin {
     domain_name = aws_lb.api.dns_name
@@ -60,7 +60,7 @@ resource "aws_cloudfront_distribution" "frontend" {
     viewer_protocol_policy = "redirect-to-https"
 
     allowed_methods = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
-    cached_methods = ["GET", "HEAD", "OPTIONS"]
+    cached_methods  = ["GET", "HEAD", "OPTIONS"]
 
     compress = true
 
@@ -73,7 +73,7 @@ resource "aws_cloudfront_distribution" "frontend" {
     min_ttl     = 0
     default_ttl = 0
     max_ttl     = 0
-  }  
+  }
 
   default_cache_behavior {
     target_origin_id       = "s3-frontend"

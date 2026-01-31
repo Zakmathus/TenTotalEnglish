@@ -96,14 +96,21 @@ using (var scope = app.Services.CreateScope())
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     await db.Database.MigrateAsync();
 
-    if (!await db.AdminUsers.AnyAsync(u => u.Username == "admin"))
+    var adminUser = builder.Configuration["Admin:Username"];
+    var adminPass = builder.Configuration["Admin:Password"];
+
+    if (!string.IsNullOrWhiteSpace(adminUser) && !string.IsNullOrWhiteSpace(adminPass))
     {
-        var hasher = new PasswordHasher<AdminUser>();
-        var admin = new AdminUser { Username = "admin" };
-        admin.PasswordHash = hasher.HashPassword(admin, "admin123");
-        db.AdminUsers.Add(admin);
-        await db.SaveChangesAsync();
+        if (!await db.AdminUsers.AnyAsync(u => u.Username == adminUser))
+        {
+            var hasher = new PasswordHasher<AdminUser>();
+            var admin = new AdminUser { Username = adminUser };
+            admin.PasswordHash = hasher.HashPassword(admin, adminPass);
+            db.AdminUsers.Add(admin);
+            await db.SaveChangesAsync();
+        }
     }
+
 }
 
 if (app.Environment.IsDevelopment())

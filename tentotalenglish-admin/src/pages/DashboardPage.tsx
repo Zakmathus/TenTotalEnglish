@@ -49,7 +49,7 @@ function formatRelative(dateIso: string) {
   return `${days}d ago`;
 }
 
-function dayKey(d: Date) {
+function dayKeyLocal(d: Date) {
   const y = d.getFullYear();
   const m = String(d.getMonth() + 1).padStart(2, "0");
   const day = String(d.getDate()).padStart(2, "0");
@@ -86,6 +86,23 @@ export default function DashboardPage() {
 
   useEffect(() => {
     loadAll();
+  }, []);
+
+  useEffect(() => {
+    const onFocus = () => loadAll();
+
+    const onVisibility = () => {
+      if (document.visibilityState === "visible") loadAll();
+    };
+
+    window.addEventListener("focus", onFocus);
+    document.addEventListener("visibilitychange", onVisibility);
+
+    return () => {
+      window.removeEventListener("focus", onFocus);
+      document.removeEventListener("visibilitychange", onVisibility);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const studentNameMap = useMemo(() => {
@@ -131,32 +148,41 @@ export default function DashboardPage() {
   }, [payments]);
 
   // Mini chart: last 7 days (including today) by payments total
-  const last7DaysBars = useMemo(() => {
-    const today = new Date();
+    const last7DaysBars = useMemo(() => {
+    // Anchor at LOCAL midnight
+    const now = new Date();
+    const anchor = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
     const days: { key: string; label: string; total: number }[] = [];
 
     for (let i = 6; i >= 0; i--) {
-      const d = new Date(today);
-      d.setDate(today.getDate() - i);
-      const key = dayKey(d);
-      const label = d.toLocaleDateString("es-MX", { weekday: "short" });
+      const d = new Date(anchor);
+      d.setDate(anchor.getDate() - i);
+
+      const key = dayKeyLocal(d); // LOCAL YYYY-MM-DD
+      const label = d.toLocaleDateString("es-MX", { weekday: "short" }); // LOCAL label
+
       days.push({ key, label, total: 0 });
     }
 
     const idx = new Map(days.map((x, i) => [x.key, i]));
+
     for (const p of payments) {
-      const d = new Date(p.paidAtUtc);
-      const k = dayKey(d);
+      const d = new Date(p.paidAtUtc); // parses UTC correctly due to "Z"
+      const k = dayKeyLocal(d); // convert to LOCAL day key
       const pos = idx.get(k);
-      if (pos !== undefined) days[pos].total += p.amount;
+      if (pos !== undefined) days[pos].total += Number(p.amount);
     }
 
     const max = Math.max(1, ...days.map((x) => x.total));
+
     return days.map((x) => ({
       ...x,
       pct: Math.round((x.total / max) * 100),
     }));
   }, [payments]);
+
+
 
   // Student table: show course (active enrollment) + status + last payment
   const lastPaymentByStudent = useMemo(() => {

@@ -1,0 +1,319 @@
+C:\Users\lmechsan\Downloads\TentotalEnglish\infra>terraform fmt
+frontend.tf
+github_oidc.tf
+
+C:\Users\lmechsan\Downloads\TentotalEnglish\infra>terraform plan
+random_password.jwt_key: Refreshing state... [id=none]
+random_password.db: Refreshing state... [id=none]
+aws_secretsmanager_secret.api: Refreshing state... [id=arn:aws:secretsmanager:us-west-2:585008064636:secret:tentotalenglish/prod/api-J1ftWn]
+aws_ecs_cluster.this: Refreshing state... [id=arn:aws:ecs:us-west-2:585008064636:cluster/tentotalenglish-prod]
+data.aws_iam_policy_document.ecs_task_assume: Reading...
+aws_ecr_repository.api: Refreshing state... [id=tentotalenglish-api]
+aws_iam_openid_connect_provider.github: Refreshing state... [id=arn:aws:iam::585008064636:oidc-provider/token.actions.githubusercontent.com]
+aws_cloudwatch_log_group.api: Refreshing state... [id=/ecs/tentotalenglish-api]
+aws_cloudfront_origin_access_control.frontend: Refreshing state... [id=E2XOY2EWK51J5S]
+aws_vpc.this: Refreshing state... [id=vpc-0027df53fab0979c4]
+aws_secretsmanager_secret.admin: Refreshing state... [id=arn:aws:secretsmanager:us-west-2:585008064636:secret:tentotalenglish/prod/admin-fKCxTj]
+aws_eip.nat: Refreshing state... [id=eipalloc-0114228d855c0e963]
+data.aws_iam_policy_document.ecs_task_assume: Read complete after 0s [id=1077804475]
+data.aws_caller_identity.current: Reading...
+data.aws_caller_identity.current: Read complete after 0s [id=585008064636]
+aws_secretsmanager_secret.db: Refreshing state... [id=arn:aws:secretsmanager:us-west-2:585008064636:secret:tentotalenglish/prod/db-dLarVv]
+aws_iam_role.ecs_task_execution: Refreshing state... [id=tentotalenglish-ecs-task-exec]
+aws_s3_bucket.frontend: Refreshing state... [id=tentotalenglish-frontend-prod-585008064636]
+data.aws_iam_policy_document.github_assume_role: Reading...
+data.aws_iam_policy_document.github_assume_role: Read complete after 0s [id=1189197951]
+aws_iam_role.github_actions: Refreshing state... [id=tentotalenglish-github-actions]
+aws_iam_role_policy_attachment.ecs_task_exec_policy: Refreshing state... [id=tentotalenglish-ecs-task-exec-20260127061235677200000002]
+aws_iam_role_policy.ecs_task_secrets_read: Refreshing state... [id=tentotalenglish-ecs-task-exec:tentotalenglish-ecs-secrets-read]
+aws_ecs_task_definition.api: Refreshing state... [id=tentotalenglish-api]
+aws_internet_gateway.this: Refreshing state... [id=igw-09a7838e0acf9c6aa]
+aws_subnet.private_b: Refreshing state... [id=subnet-0d1ce22520b15884f]
+aws_lb_target_group.api: Refreshing state... [id=arn:aws:elasticloadbalancing:us-west-2:585008064636:targetgroup/tentotalenglish-api-tg/372d7621685b7935]
+aws_subnet.public_b: Refreshing state... [id=subnet-0838988b9ef334cb9]
+aws_subnet.public_a: Refreshing state... [id=subnet-03d73235c4623b247]
+aws_subnet.private_a: Refreshing state... [id=subnet-0b01a8cb98759fa18]
+aws_security_group.alb: Refreshing state... [id=sg-04ae42981b5b2ab9c]
+aws_route_table.public: Refreshing state... [id=rtb-0cb0f2772d3089915]
+aws_s3_bucket_public_access_block.frontend: Refreshing state... [id=tentotalenglish-frontend-prod-585008064636]
+aws_s3_bucket_versioning.frontend: Refreshing state... [id=tentotalenglish-frontend-prod-585008064636]
+data.aws_iam_policy_document.github_actions_permissions: Reading...
+data.aws_iam_policy_document.github_actions_permissions: Read complete after 0s [id=4075351477]
+aws_db_subnet_group.this: Refreshing state... [id=tentotalenglish-db-subnets]
+aws_iam_role_policy.github_actions_inline: Refreshing state... [id=tentotalenglish-github-actions:tentotalenglish-github-actions-policy]
+aws_security_group.api: Refreshing state... [id=sg-0253b88d615d2a6a9]
+aws_route_table_association.public_a: Refreshing state... [id=rtbassoc-0e194d4036ff11d75]
+aws_nat_gateway.this: Refreshing state... [id=nat-0d8187e61fa00eea3]
+aws_route_table_association.public_b: Refreshing state... [id=rtbassoc-0ab80900bc1913d8c]
+aws_lb.api: Refreshing state... [id=arn:aws:elasticloadbalancing:us-west-2:585008064636:loadbalancer/app/tentotalenglish-api-alb/8b71e18a264df86f]
+aws_route_table.private: Refreshing state... [id=rtb-0818016a7703aa15a]
+aws_security_group.db: Refreshing state... [id=sg-0d237d7592454d869]
+aws_route_table_association.private_b: Refreshing state... [id=rtbassoc-0e5c5169ebe34fba2]
+aws_route_table_association.private_a: Refreshing state... [id=rtbassoc-059a69a50419d4fad]
+aws_db_instance.this: Refreshing state... [id=db-UYZIW3LT2OV666HENRWBS46GZY]
+aws_lb_listener.https: Refreshing state... [id=arn:aws:elasticloadbalancing:us-west-2:585008064636:listener/app/tentotalenglish-api-alb/8b71e18a264df86f/8c247043dd78d269]
+aws_lb_listener.http: Refreshing state... [id=arn:aws:elasticloadbalancing:us-west-2:585008064636:listener/app/tentotalenglish-api-alb/8b71e18a264df86f/9905b417bb4a4b11]
+aws_cloudfront_distribution.frontend: Refreshing state... [id=E1PP43GP2E6NOL]
+aws_secretsmanager_secret_version.api: Refreshing state... [id=arn:aws:secretsmanager:us-west-2:585008064636:secret:tentotalenglish/prod/api-J1ftWn|terraform-20260127070108324500000001]
+aws_secretsmanager_secret_version.db: Refreshing state... [id=arn:aws:secretsmanager:us-west-2:585008064636:secret:tentotalenglish/prod/db-dLarVv|terraform-20260127070108324500000002]
+aws_ecs_service.api: Refreshing state... [id=arn:aws:ecs:us-west-2:585008064636:service/tentotalenglish-prod/tentotalenglish-api]
+aws_s3_bucket_policy.frontend: Refreshing state... [id=tentotalenglish-frontend-prod-585008064636]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following
+symbols:
+  ~ update in-place
+-/+ destroy and then create replacement
+ <= read (data resources)
+
+Terraform will perform the following actions:
+
+  # data.aws_ecs_task_definition.api_latest will be read during apply
+  # (depends on a resource or a module with changes pending)
+ <= data "aws_ecs_task_definition" "api_latest" {
+      + arn                      = (known after apply)
+      + arn_without_revision     = (known after apply)
+      + container_definitions    = (known after apply)
+      + cpu                      = (known after apply)
+      + enable_fault_injection   = (known after apply)
+      + ephemeral_storage        = (known after apply)
+      + execution_role_arn       = (known after apply)
+      + family                   = (known after apply)
+      + id                       = (known after apply)
+      + inference_accelerator    = (known after apply)
+      + ipc_mode                 = (known after apply)
+      + memory                   = (known after apply)
+      + network_mode             = (known after apply)
+      + pid_mode                 = (known after apply)
+      + placement_constraints    = (known after apply)
+      + proxy_configuration      = (known after apply)
+      + requires_compatibilities = (known after apply)
+      + revision                 = (known after apply)
+      + runtime_platform         = (known after apply)
+      + status                   = (known after apply)
+      + task_definition          = "tentotalenglish-api"
+      + task_role_arn            = (known after apply)
+      + volume                   = (known after apply)
+    }
+
+  # data.aws_iam_policy_document.frontend_bucket_policy will be read during apply
+  # (depends on a resource or a module with changes pending)
+ <= data "aws_iam_policy_document" "frontend_bucket_policy" {
+      + id            = (known after apply)
+      + json          = (known after apply)
+      + minified_json = (known after apply)
+
+      + statement {
+          + actions   = [
+              + "s3:GetObject",
+            ]
+          + resources = [
+              + "arn:aws:s3:::tentotalenglish-frontend-prod-585008064636/*",
+            ]
+          + sid       = "AllowCloudFrontRead"
+
+          + condition {
+              + test     = "StringEquals"
+              + values   = [
+                  + "arn:aws:cloudfront::585008064636:distribution/E1PP43GP2E6NOL",
+                ]
+              + variable = "AWS:SourceArn"
+            }
+
+          + principals {
+              + identifiers = [
+                  + "cloudfront.amazonaws.com",
+                ]
+              + type        = "Service"
+            }
+        }
+    }
+
+  # data.aws_iam_policy_document.secrets_read will be read during apply
+  # (depends on a resource or a module with changes pending)
+ <= data "aws_iam_policy_document" "secrets_read" {
+      + id            = (known after apply)
+      + json          = (known after apply)
+      + minified_json = (known after apply)
+
+      + statement {
+          + actions   = [
+              + "kms:Decrypt",
+              + "secretsmanager:GetSecretValue",
+            ]
+          + resources = [
+              + "arn:aws:secretsmanager:us-west-2:585008064636:secret:tentotalenglish/prod/admin-fKCxTj",
+              + "arn:aws:secretsmanager:us-west-2:585008064636:secret:tentotalenglish/prod/api-J1ftWn",
+              + "arn:aws:secretsmanager:us-west-2:585008064636:secret:tentotalenglish/prod/db-dLarVv",
+            ]
+        }
+    }
+
+  # aws_cloudfront_distribution.frontend will be updated in-place
+  ~ resource "aws_cloudfront_distribution" "frontend" {
+        id                              = "E1PP43GP2E6NOL"
+        tags                            = {
+            "Name" = "tentotalenglish-frontend-cf"
+        }
+        # (22 unchanged attributes hidden)
+
+      ~ ordered_cache_behavior {
+          ~ cached_methods             = [
+              + "OPTIONS",
+                # (2 unchanged elements hidden)
+            ]
+            # (16 unchanged attributes hidden)
+
+          ~ forwarded_values {
+                # (3 unchanged attributes hidden)
+
+              ~ cookies {
+                  ~ forward           = "all" -> "none"
+                    # (1 unchanged attribute hidden)
+                }
+            }
+
+            # (1 unchanged block hidden)
+        }
+
+        # (7 unchanged blocks hidden)
+    }
+
+  # aws_ecs_service.api will be updated in-place
+  ~ resource "aws_ecs_service" "api" {
+        id                                 = "arn:aws:ecs:us-west-2:585008064636:service/tentotalenglish-prod/tentotalenglish-api"
+        name                               = "tentotalenglish-api"
+        tags                               = {}
+      ~ task_definition                    = "arn:aws:ecs:us-west-2:585008064636:task-definition/tentotalenglish-api:3" -> (known after apply)
+        # (16 unchanged attributes hidden)
+
+        # (4 unchanged blocks hidden)
+    }
+
+  # aws_ecs_task_definition.api must be replaced
+-/+ resource "aws_ecs_task_definition" "api" {
+      ~ arn                      = "arn:aws:ecs:us-west-2:585008064636:task-definition/tentotalenglish-api:1" -> (known after apply)
+      ~ arn_without_revision     = "arn:aws:ecs:us-west-2:585008064636:task-definition/tentotalenglish-api" -> (known after apply)
+      ~ container_definitions    = jsonencode(
+          ~ [
+              ~ {
+                  - mountPoints      = []
+                    name             = "api"
+                  ~ secrets          = [
+                      + {
+                          + name      = "Admin__Password"
+                          + valueFrom = "arn:aws:secretsmanager:us-west-2:585008064636:secret:tentotalenglish/prod/admin-fKCxTj:Admin__Password::"
+                        },
+                      + {
+                          + name      = "Admin__Username"
+                          + valueFrom = "arn:aws:secretsmanager:us-west-2:585008064636:secret:tentotalenglish/prod/admin-fKCxTj:Admin__Username::"
+                        },
+                        {
+                            name      = "ConnectionStrings__Postgres"
+                            valueFrom = "arn:aws:secretsmanager:us-west-2:585008064636:secret:tentotalenglish/prod/api-J1ftWn:ConnectionStrings__Postgres::"
+                        },
+                        # (3 unchanged elements hidden)
+                    ]
+                  - systemControls   = []
+                  - volumesFrom      = []
+                    # (5 unchanged attributes hidden)
+                },
+            ] # forces replacement
+        )
+      ~ enable_fault_injection   = false -> (known after apply)
+      ~ id                       = "tentotalenglish-api" -> (known after apply)
+      ~ revision                 = 1 -> (known after apply)
+      - tags                     = {} -> null
+      ~ tags_all                 = {} -> (known after apply)
+        # (11 unchanged attributes hidden)
+    }
+
+  # aws_iam_role_policy.ecs_task_secrets_read will be updated in-place
+  ~ resource "aws_iam_role_policy" "ecs_task_secrets_read" {
+        id          = "tentotalenglish-ecs-task-exec:tentotalenglish-ecs-secrets-read"
+        name        = "tentotalenglish-ecs-secrets-read"
+      ~ policy      = jsonencode(
+            {
+              - Statement = [
+                  - {
+                      - Action   = [
+                          - "secretsmanager:GetSecretValue",
+                          - "kms:Decrypt",
+                        ]
+                      - Effect   = "Allow"
+                      - Resource = [
+                          - "arn:aws:secretsmanager:us-west-2:585008064636:secret:tentotalenglish/prod/db-dLarVv",
+                          - "arn:aws:secretsmanager:us-west-2:585008064636:secret:tentotalenglish/prod/api-J1ftWn",
+                        ]
+                    },
+                ]
+              - Version   = "2012-10-17"
+            }
+        ) -> (known after apply)
+        # (2 unchanged attributes hidden)
+    }
+
+  # aws_lb_listener.http will be updated in-place
+  ~ resource "aws_lb_listener" "http" {
+        id                                                                  = "arn:aws:elasticloadbalancing:us-west-2:585008064636:listener/app/tentotalenglish-api-alb/8b71e18a264df86f/9905b417bb4a4b11"
+        tags                                                                = {}
+        # (17 unchanged attributes hidden)
+
+      ~ default_action {
+          ~ type             = "forward" -> "redirect"
+            # (2 unchanged attributes hidden)
+
+          + redirect {
+              + host        = "#{host}"
+              + path        = "/#{path}"
+              + port        = "443"
+              + protocol    = "HTTPS"
+              + query       = "#{query}"
+              + status_code = "HTTP_301"
+            }
+        }
+    }
+
+  # aws_s3_bucket_policy.frontend will be updated in-place
+  ~ resource "aws_s3_bucket_policy" "frontend" {
+        id     = "tentotalenglish-frontend-prod-585008064636"
+      ~ policy = jsonencode(
+            {
+              - Statement = [
+                  - {
+                      - Action    = "s3:GetObject"
+                      - Condition = {
+                          - StringEquals = {
+                              - "AWS:SourceArn" = "arn:aws:cloudfront::585008064636:distribution/E1PP43GP2E6NOL"
+                            }
+                        }
+                      - Effect    = "Allow"
+                      - Principal = {
+                          - Service = "cloudfront.amazonaws.com"
+                        }
+                      - Resource  = "arn:aws:s3:::tentotalenglish-frontend-prod-585008064636/*"
+                      - Sid       = "AllowCloudFrontRead"
+                    },
+                ]
+              - Version   = "2012-10-17"
+            }
+        ) -> (known after apply)
+        # (1 unchanged attribute hidden)
+    }
+
+  # aws_secretsmanager_secret.admin will be updated in-place
+  ~ resource "aws_secretsmanager_secret" "admin" {
+      - description                    = "Prod admin credentials for TenTotalEnglish" -> null
+      + force_overwrite_replica_secret = false
+        id                             = "arn:aws:secretsmanager:us-west-2:585008064636:secret:tentotalenglish/prod/admin-fKCxTj"
+        name                           = "tentotalenglish/prod/admin"
+      + recovery_window_in_days        = 30
+        tags                           = {}
+        # (5 unchanged attributes hidden)
+    }
+
+Plan: 1 to add, 6 to change, 1 to destroy.
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+Note: You didn't use the -out option to save this plan, so Terraform can't guarantee to take exactly these actions if you run
+"terraform apply" now.
