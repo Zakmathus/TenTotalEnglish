@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { http } from "../api/http";
+import "./courses.css";
 
 type Course = {
   id: string;
@@ -7,6 +8,62 @@ type Course = {
   description?: string | null;
   monthlyPrice: number;
 };
+
+function PencilIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        d="M12 20h9"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <path
+        d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5Z"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function TrashIcon() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        d="M3 6h18"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <path
+        d="M8 6V4h8v2"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+      <path
+        d="M6 6l1 16h10l1-16"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M10 11v6M14 11v6"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
 
 export function CoursesPage() {
   const [items, setItems] = useState<Course[]>([]);
@@ -96,87 +153,158 @@ export function CoursesPage() {
 
   const isEditing = (id: string) => editingId === id;
 
-  return (
-    <div>
-      <h2>Courses</h2>
+  const footerText = useMemo(() => {
+    const total = items.length;
+    return `Showing ${total} of ${total} results`;
+  }, [items.length]);
 
-      {/* Create */}
-      <div style={{ display: "flex", gap: 8, marginBottom: 12, flexWrap: "wrap" }}>
-        <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Name" />
-        <input value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Description" />
-        <input
-          value={monthlyPrice}
-          onChange={(e) => setMonthlyPrice(Number(e.target.value))}
-          placeholder="Monthly price"
-          type="number"
-        />
-        <button onClick={create}>Add</button>
+  return (
+    <div className="courses-page">
+      <div className="courses-head">
+        <h1 className="courses-title">Courses</h1>
       </div>
 
-      {error && <div style={{ color: "crimson", marginBottom: 12 }}>{String(error)}</div>}
+      <div className="courses-card">
+        {/* Create */}
+        <div className="courses-create">
+          <input
+            className="courses-input"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Name"
+          />
+          <input
+            className="courses-input"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="Description"
+          />
+          <input
+            className="courses-input"
+            value={monthlyPrice}
+            onChange={(e) => setMonthlyPrice(Number(e.target.value))}
+            placeholder="Monthly price"
+            type="number"
+          />
 
-      <table cellPadding={8} style={{ borderCollapse: "collapse", width: "100%" }}>
-        <thead>
-          <tr>
-            <th align="left">Name</th>
-            <th align="left">Description</th>
-            <th align="left">Monthly</th>
-            <th align="left">Id</th>
-            <th align="left">Actions</th>
-          </tr>
-        </thead>
+          <button className="courses-add" onClick={create}>
+            Add
+          </button>
+        </div>
 
-        <tbody>
-          {items.map((c) => (
-            <tr key={c.id} style={{ borderTop: "1px solid #eee" }}>
-              <td>
-                {isEditing(c.id) ? (
-                  <input value={editName} onChange={(e) => setEditName(e.target.value)} />
-                ) : (
-                  c.name
-                )}
-              </td>
+        {error && <div className="courses-error">{String(error)}</div>}
 
-              <td>
-                {isEditing(c.id) ? (
-                  <input value={editDescription} onChange={(e) => setEditDescription(e.target.value)} />
-                ) : (
-                  c.description ?? ""
-                )}
-              </td>
+        <div className="courses-table-wrap">
+          <table className="courses-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th className="num">Monthly</th>
+                <th className="mono">ID</th>
+                <th className="right">Actions</th>
+              </tr>
+            </thead>
 
-              <td>
-                {isEditing(c.id) ? (
-                  <input
-                    value={editMonthlyPrice}
-                    onChange={(e) => setEditMonthlyPrice(Number(e.target.value))}
-                    type="number"
-                    style={{ width: 120 }}
-                  />
-                ) : (
-                  c.monthlyPrice
-                )}
-              </td>
+            <tbody>
+              {items.map((c) => (
+                <tr key={c.id}>
+                  <td>
+                    {isEditing(c.id) ? (
+                      <input
+                        className="courses-cell-input"
+                        value={editName}
+                        onChange={(e) => setEditName(e.target.value)}
+                      />
+                    ) : (
+                      c.name
+                    )}
+                  </td>
 
-              <td style={{ fontFamily: "monospace" }}>{c.id}</td>
+                  <td>
+                    {isEditing(c.id) ? (
+                      <input
+                        className="courses-cell-input"
+                        value={editDescription}
+                        onChange={(e) => setEditDescription(e.target.value)}
+                      />
+                    ) : (
+                      c.description ?? ""
+                    )}
+                  </td>
 
-              <td style={{ display: "flex", gap: 8 }}>
-                {isEditing(c.id) ? (
-                  <>
-                    <button onClick={saveEdit}>Save</button>
-                    <button onClick={cancelEdit}>Cancel</button>
-                  </>
-                ) : (
-                  <>
-                    <button onClick={() => startEdit(c)}>Edit</button>
-                    <button onClick={() => remove(c.id)}>Delete</button>
-                  </>
-                )}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+                  <td className="num">
+                    {isEditing(c.id) ? (
+                      <input
+                        className="courses-cell-input"
+                        value={editMonthlyPrice}
+                        onChange={(e) => setEditMonthlyPrice(Number(e.target.value))}
+                        type="number"
+                      />
+                    ) : (
+                      c.monthlyPrice
+                    )}
+                  </td>
+
+                  <td className="mono">{c.id}</td>
+
+                  <td className="right">
+                    <div className="courses-actions">
+                      {isEditing(c.id) ? (
+                        <>
+                          <button className="courses-action secondary" onClick={saveEdit}>
+                            Save
+                          </button>
+                          <button className="courses-action ghost" onClick={cancelEdit}>
+                            Cancel
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          <button className="courses-action edit" onClick={() => startEdit(c)}>
+                            <PencilIcon />
+                            Edit
+                          </button>
+                          <button className="courses-action delete" onClick={() => remove(c.id)}>
+                            <TrashIcon />
+                            Delete
+                          </button>
+                        </>
+                      )}
+                    </div>
+                  </td>
+                </tr>
+              ))}
+
+              {items.length === 0 && (
+                <tr>
+                  <td className="courses-empty" colSpan={5}>
+                    No courses found.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+
+        <div className="courses-footer">
+          <div className="courses-foot-left">{footerText}</div>
+
+          <div className="courses-pager">
+            <button className="pager-btn" disabled title="Previous page">
+              ‹
+            </button>
+            <div className="pager-mid">
+              <span className="pager-page">1</span>
+              <span className="pager-of">of</span>
+              <span className="pager-total">1</span>
+            </div>
+            <button className="pager-btn" disabled title="Next page">
+              ›
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
