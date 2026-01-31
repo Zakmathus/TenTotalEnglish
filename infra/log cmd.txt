@@ -1,3 +1,292 @@
+C:\Users\lmechsan\Downloads\TentotalEnglish>aws secretsmanager put-secret-value --secret-id tentotalenglish/prod/admin --secret-string "{\"Admin__Username\":\"TotalEnglishAdmin\",\"Admin__Password\":\"#Centinela1999!#\"}" --region us-west-2 --profile tentotalenglish
+
+An error occurred (ResourceNotFoundException) when calling the PutSecretValue operation: Secrets Manager can't find the specified secret.
+
+C:\Users\lmechsan\Downloads\TentotalEnglish>aws secretsmanager list-secrets --region us-west-2 --profile tentotalenglish --query "SecretList[?contains(Name,'tentotalenglish')].[Name]" --output table
+------------------------------
+|         ListSecrets        |
++----------------------------+
+|  tentotalenglish/prod/db   |
+|  tentotalenglish/prod/api  |
++----------------------------+
+
+
+C:\Users\lmechsan\Downloads\TentotalEnglish>aws secretsmanager create-secret --name tentotalenglish/prod/admin --description "Prod admin credentials for TenTotalEnglish" --region us-west-2 --profile tentotalenglish
+{
+    "ARN": "arn:aws:secretsmanager:us-west-2:585008064636:secret:tentotalenglish/prod/admin-fKCxTj",
+    "Name": "tentotalenglish/prod/admin"
+}
+
+
+C:\Users\lmechsan\Downloads\TentotalEnglish>aws secretsmanager describe-secret --secret-id tentotalenglish/prod/admin --region us-west-2 --profile tentotalenglish
+{
+    "ARN": "arn:aws:secretsmanager:us-west-2:585008064636:secret:tentotalenglish/prod/admin-fKCxTj",
+    "Name": "tentotalenglish/prod/admin",
+    "Description": "Prod admin credentials for TenTotalEnglish",
+    "LastChangedDate": "2026-01-30T22:13:38.944000-08:00",
+    "CreatedDate": "2026-01-30T22:13:38.938000-08:00"
+}
+
+
+C:\Users\lmechsan\Downloads\TentotalEnglish>aws secretsmanager put-secret-value --secret-id tentotalenglish/prod/admin --secret-string "{\"Admin__Username\":\"TotalEnglishAdmin\",\"Admin__Password\":\"#Centinela1999!#\"}" --region us-west-2 --profile tentotalenglish
+{
+    "ARN": "arn:aws:secretsmanager:us-west-2:585008064636:secret:tentotalenglish/prod/admin-fKCxTj",
+    "Name": "tentotalenglish/prod/admin",
+    "VersionId": "75bf2e1d-7cae-4c12-9151-061fc11c5a75",
+    "VersionStages": [
+        "AWSCURRENT"
+    ]
+}
+
+
+C:\Users\lmechsan\Downloads\TentotalEnglish>aws secretsmanager get-secret-value --secret-id tentotalenglish/prod/admin --query SecretString --output text --region us-west-2 --profile tentotalenglish
+{"Admin__Username":"TotalEnglishAdmin","Admin__Password":"#Centinela1999!#"}
+
+
+C:\Users\lmechsan\Downloads\TentotalEnglish>cd infra
+
+C:\Users\lmechsan\Downloads\TentotalEnglish\infra>terraform import aws_secretsmanager_secret.admin arn:aws:secretsmanager:us-west-2:585008064636:secret:tentotalenglish/prod/admin-fKCxTj
+Error: resource address "aws_secretsmanager_secret.admin" does not exist in the configuration.
+
+Before importing this resource, please create its configuration in the root module. For example:
+
+resource "aws_secretsmanager_secret" "admin" {
+  # (resource arguments)
+}
+
+
+C:\Users\lmechsan\Downloads\TentotalEnglish\infra>type nul > admin_secret.tf
+
+C:\Users\lmechsan\Downloads\TentotalEnglish\infra>terraform import aws_secretsmanager_secret.admin arn:aws:secretsmanager:us-west-2:585008064636:secret:tentotalenglish/prod/admin-fKCxTj
+aws_secretsmanager_secret.admin: Importing from ID "arn:aws:secretsmanager:us-west-2:585008064636:secret:tentotalenglish/prod/admin-fKCxTj"...
+aws_secretsmanager_secret.admin: Import prepared!
+  Prepared aws_secretsmanager_secret for import
+data.aws_iam_policy_document.ecs_task_assume: Reading...
+data.aws_caller_identity.current: Reading...
+aws_secretsmanager_secret.admin: Refreshing state... [id=arn:aws:secretsmanager:us-west-2:585008064636:secret:tentotalenglish/prod/admin-fKCxTj]
+data.aws_iam_policy_document.secrets_read: Reading...
+data.aws_iam_policy_document.ecs_task_assume: Read complete after 0s [id=1077804475]
+data.aws_iam_policy_document.secrets_read: Read complete after 0s [id=3431151958]
+data.aws_iam_policy_document.github_assume_role: Reading...
+data.aws_iam_policy_document.github_assume_role: Read complete after 0s [id=1189197951]
+data.aws_caller_identity.current: Read complete after 0s [id=585008064636]
+data.aws_iam_policy_document.github_actions_permissions: Reading...
+data.aws_iam_policy_document.github_actions_permissions: Read complete after 0s [id=4075351477]
+data.aws_iam_policy_document.frontend_bucket_policy: Reading...
+data.aws_iam_policy_document.frontend_bucket_policy: Read complete after 0s [id=2364812339]
+
+Import successful!
+
+The resources that were imported are shown above. These resources are now in
+your Terraform state and will henceforth be managed by Terraform.
+
+
+C:\Users\lmechsan\Downloads\TentotalEnglish\infra>terraform plan
+random_password.jwt_key: Refreshing state... [id=none]
+random_password.db: Refreshing state... [id=none]
+aws_cloudfront_origin_access_control.frontend: Refreshing state... [id=E2XOY2EWK51J5S]
+aws_eip.nat: Refreshing state... [id=eipalloc-0114228d855c0e963]
+aws_cloudwatch_log_group.api: Refreshing state... [id=/ecs/tentotalenglish-api]
+data.aws_iam_policy_document.ecs_task_assume: Reading...
+aws_secretsmanager_secret.api: Refreshing state... [id=arn:aws:secretsmanager:us-west-2:585008064636:secret:tentotalenglish/prod/api-J1ftWn]
+aws_iam_openid_connect_provider.github: Refreshing state... [id=arn:aws:iam::585008064636:oidc-provider/token.actions.githubusercontent.com]
+aws_ecr_repository.api: Refreshing state... [id=tentotalenglish-api]
+aws_secretsmanager_secret.db: Refreshing state... [id=arn:aws:secretsmanager:us-west-2:585008064636:secret:tentotalenglish/prod/db-dLarVv]
+aws_ecs_cluster.this: Refreshing state... [id=arn:aws:ecs:us-west-2:585008064636:cluster/tentotalenglish-prod]
+data.aws_caller_identity.current: Reading...
+data.aws_iam_policy_document.ecs_task_assume: Read complete after 0s [id=1077804475]
+aws_vpc.this: Refreshing state... [id=vpc-0027df53fab0979c4]
+data.aws_caller_identity.current: Read complete after 0s [id=585008064636]
+aws_secretsmanager_secret.admin: Refreshing state... [id=arn:aws:secretsmanager:us-west-2:585008064636:secret:tentotalenglish/prod/admin-fKCxTj]
+aws_iam_role.ecs_task_execution: Refreshing state... [id=tentotalenglish-ecs-task-exec]
+aws_s3_bucket.frontend: Refreshing state... [id=tentotalenglish-frontend-prod-585008064636]
+data.aws_iam_policy_document.secrets_read: Reading...
+data.aws_iam_policy_document.secrets_read: Read complete after 0s [id=3431151958]
+data.aws_iam_policy_document.github_assume_role: Reading...
+data.aws_iam_policy_document.github_assume_role: Read complete after 0s [id=1189197951]
+aws_iam_role.github_actions: Refreshing state... [id=tentotalenglish-github-actions]
+aws_iam_role_policy_attachment.ecs_task_exec_policy: Refreshing state... [id=tentotalenglish-ecs-task-exec-20260127061235677200000002]
+aws_iam_role_policy.ecs_task_secrets_read: Refreshing state... [id=tentotalenglish-ecs-task-exec:tentotalenglish-ecs-secrets-read]
+aws_ecs_task_definition.api: Refreshing state... [id=tentotalenglish-api]
+aws_internet_gateway.this: Refreshing state... [id=igw-09a7838e0acf9c6aa]
+aws_subnet.private_a: Refreshing state... [id=subnet-0b01a8cb98759fa18]
+aws_subnet.public_b: Refreshing state... [id=subnet-0838988b9ef334cb9]
+aws_subnet.private_b: Refreshing state... [id=subnet-0d1ce22520b15884f]
+aws_subnet.public_a: Refreshing state... [id=subnet-03d73235c4623b247]
+aws_lb_target_group.api: Refreshing state... [id=arn:aws:elasticloadbalancing:us-west-2:585008064636:targetgroup/tentotalenglish-api-tg/372d7621685b7935]
+aws_security_group.alb: Refreshing state... [id=sg-04ae42981b5b2ab9c]
+aws_s3_bucket_public_access_block.frontend: Refreshing state... [id=tentotalenglish-frontend-prod-585008064636]
+aws_s3_bucket_versioning.frontend: Refreshing state... [id=tentotalenglish-frontend-prod-585008064636]
+data.aws_iam_policy_document.github_actions_permissions: Reading...
+data.aws_iam_policy_document.github_actions_permissions: Read complete after 0s [id=4075351477]
+aws_iam_role_policy.github_actions_inline: Refreshing state... [id=tentotalenglish-github-actions:tentotalenglish-github-actions-policy]
+aws_route_table.public: Refreshing state... [id=rtb-0cb0f2772d3089915]
+aws_security_group.api: Refreshing state... [id=sg-0253b88d615d2a6a9]
+aws_route_table_association.public_a: Refreshing state... [id=rtbassoc-0e194d4036ff11d75]
+aws_nat_gateway.this: Refreshing state... [id=nat-0d8187e61fa00eea3]
+aws_route_table_association.public_b: Refreshing state... [id=rtbassoc-0ab80900bc1913d8c]
+aws_lb.api: Refreshing state... [id=arn:aws:elasticloadbalancing:us-west-2:585008064636:loadbalancer/app/tentotalenglish-api-alb/8b71e18a264df86f]
+aws_db_subnet_group.this: Refreshing state... [id=tentotalenglish-db-subnets]
+aws_security_group.db: Refreshing state... [id=sg-0d237d7592454d869]
+aws_route_table.private: Refreshing state... [id=rtb-0818016a7703aa15a]
+aws_route_table_association.private_b: Refreshing state... [id=rtbassoc-0e5c5169ebe34fba2]
+aws_route_table_association.private_a: Refreshing state... [id=rtbassoc-059a69a50419d4fad]
+aws_lb_listener.http: Refreshing state... [id=arn:aws:elasticloadbalancing:us-west-2:585008064636:listener/app/tentotalenglish-api-alb/8b71e18a264df86f/9905b417bb4a4b11]
+aws_lb_listener.https: Refreshing state... [id=arn:aws:elasticloadbalancing:us-west-2:585008064636:listener/app/tentotalenglish-api-alb/8b71e18a264df86f/8c247043dd78d269]
+aws_cloudfront_distribution.frontend: Refreshing state... [id=E1PP43GP2E6NOL]
+aws_db_instance.this: Refreshing state... [id=db-UYZIW3LT2OV666HENRWBS46GZY]
+aws_secretsmanager_secret_version.api: Refreshing state... [id=arn:aws:secretsmanager:us-west-2:585008064636:secret:tentotalenglish/prod/api-J1ftWn|terraform-20260127070108324500000001]
+aws_secretsmanager_secret_version.db: Refreshing state... [id=arn:aws:secretsmanager:us-west-2:585008064636:secret:tentotalenglish/prod/db-dLarVv|terraform-20260127070108324500000002]
+aws_ecs_service.api: Refreshing state... [id=arn:aws:ecs:us-west-2:585008064636:service/tentotalenglish-prod/tentotalenglish-api]
+aws_s3_bucket_policy.frontend: Refreshing state... [id=tentotalenglish-frontend-prod-585008064636]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following
+symbols:
+  ~ update in-place
+ <= read (data resources)
+
+Terraform will perform the following actions:
+
+  # data.aws_iam_policy_document.frontend_bucket_policy will be read during apply
+  # (depends on a resource or a module with changes pending)
+ <= data "aws_iam_policy_document" "frontend_bucket_policy" {
+      + id            = (known after apply)
+      + json          = (known after apply)
+      + minified_json = (known after apply)
+
+      + statement {
+          + actions   = [
+              + "s3:GetObject",
+            ]
+          + resources = [
+              + "arn:aws:s3:::tentotalenglish-frontend-prod-585008064636/*",
+            ]
+          + sid       = "AllowCloudFrontRead"
+
+          + condition {
+              + test     = "StringEquals"
+              + values   = [
+                  + "arn:aws:cloudfront::585008064636:distribution/E1PP43GP2E6NOL",
+                ]
+              + variable = "AWS:SourceArn"
+            }
+
+          + principals {
+              + identifiers = [
+                  + "cloudfront.amazonaws.com",
+                ]
+              + type        = "Service"
+            }
+        }
+    }
+
+  # aws_cloudfront_distribution.frontend will be updated in-place
+  ~ resource "aws_cloudfront_distribution" "frontend" {
+        id                              = "E1PP43GP2E6NOL"
+        tags                            = {
+            "Name" = "tentotalenglish-frontend-cf"
+        }
+        # (22 unchanged attributes hidden)
+
+      ~ ordered_cache_behavior {
+          ~ cached_methods             = [
+              + "OPTIONS",
+                # (2 unchanged elements hidden)
+            ]
+            # (16 unchanged attributes hidden)
+
+          ~ forwarded_values {
+                # (3 unchanged attributes hidden)
+
+              ~ cookies {
+                  ~ forward           = "all" -> "none"
+                    # (1 unchanged attribute hidden)
+                }
+            }
+
+            # (1 unchanged block hidden)
+        }
+
+        # (7 unchanged blocks hidden)
+    }
+
+  # aws_ecs_service.api will be updated in-place
+  ~ resource "aws_ecs_service" "api" {
+        id                                 = "arn:aws:ecs:us-west-2:585008064636:service/tentotalenglish-prod/tentotalenglish-api"
+        name                               = "tentotalenglish-api"
+        tags                               = {}
+      ~ task_definition                    = "arn:aws:ecs:us-west-2:585008064636:task-definition/tentotalenglish-api:3" -> "arn:aws:ecs:us-west-2:585008064636:task-definition/tentotalenglish-api:1"
+        # (16 unchanged attributes hidden)
+
+        # (4 unchanged blocks hidden)
+    }
+
+  # aws_lb_listener.http will be updated in-place
+  ~ resource "aws_lb_listener" "http" {
+        id                                                                  = "arn:aws:elasticloadbalancing:us-west-2:585008064636:listener/app/tentotalenglish-api-alb/8b71e18a264df86f/9905b417bb4a4b11"
+        tags                                                                = {}
+        # (17 unchanged attributes hidden)
+
+      ~ default_action {
+          ~ type             = "forward" -> "redirect"
+            # (2 unchanged attributes hidden)
+
+          + redirect {
+              + host        = "#{host}"
+              + path        = "/#{path}"
+              + port        = "443"
+              + protocol    = "HTTPS"
+              + query       = "#{query}"
+              + status_code = "HTTP_301"
+            }
+        }
+    }
+
+  # aws_s3_bucket_policy.frontend will be updated in-place
+  ~ resource "aws_s3_bucket_policy" "frontend" {
+        id     = "tentotalenglish-frontend-prod-585008064636"
+      ~ policy = jsonencode(
+            {
+              - Statement = [
+                  - {
+                      - Action    = "s3:GetObject"
+                      - Condition = {
+                          - StringEquals = {
+                              - "AWS:SourceArn" = "arn:aws:cloudfront::585008064636:distribution/E1PP43GP2E6NOL"
+                            }
+                        }
+                      - Effect    = "Allow"
+                      - Principal = {
+                          - Service = "cloudfront.amazonaws.com"
+                        }
+                      - Resource  = "arn:aws:s3:::tentotalenglish-frontend-prod-585008064636/*"
+                      - Sid       = "AllowCloudFrontRead"
+                    },
+                ]
+              - Version   = "2012-10-17"
+            }
+        ) -> (known after apply)
+        # (1 unchanged attribute hidden)
+    }
+
+  # aws_secretsmanager_secret.admin will be updated in-place
+  ~ resource "aws_secretsmanager_secret" "admin" {
+      - description                    = "Prod admin credentials for TenTotalEnglish" -> null
+      + force_overwrite_replica_secret = false
+        id                             = "arn:aws:secretsmanager:us-west-2:585008064636:secret:tentotalenglish/prod/admin-fKCxTj"
+        name                           = "tentotalenglish/prod/admin"
+      + recovery_window_in_days        = 30
+        tags                           = {}
+        # (5 unchanged attributes hidden)
+    }
+
+Plan: 0 to add, 5 to change, 0 to destroy.
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+Note: You didn't use the -out option to save this plan, so Terraform can't guarantee to take exactly these actions if you run
+"terraform apply" now.
+
 C:\Users\lmechsan\Downloads\TentotalEnglish\infra>terraform fmt
 frontend.tf
 github_oidc.tf
@@ -317,3 +606,735 @@ Plan: 1 to add, 6 to change, 1 to destroy.
 
 Note: You didn't use the -out option to save this plan, so Terraform can't guarantee to take exactly these actions if you run
 "terraform apply" now.
+
+C:\Users\lmechsan\Downloads\TentotalEnglish\infra>terraform apply
+random_password.jwt_key: Refreshing state... [id=none]
+random_password.db: Refreshing state... [id=none]
+aws_secretsmanager_secret.db: Refreshing state... [id=arn:aws:secretsmanager:us-west-2:585008064636:secret:tentotalenglish/prod/db-dLarVv]
+aws_cloudfront_origin_access_control.frontend: Refreshing state... [id=E2XOY2EWK51J5S]
+data.aws_caller_identity.current: Reading...
+aws_secretsmanager_secret.api: Refreshing state... [id=arn:aws:secretsmanager:us-west-2:585008064636:secret:tentotalenglish/prod/api-J1ftWn]
+data.aws_iam_policy_document.ecs_task_assume: Reading...
+aws_cloudwatch_log_group.api: Refreshing state... [id=/ecs/tentotalenglish-api]
+aws_secretsmanager_secret.admin: Refreshing state... [id=arn:aws:secretsmanager:us-west-2:585008064636:secret:tentotalenglish/prod/admin-fKCxTj]
+aws_iam_openid_connect_provider.github: Refreshing state... [id=arn:aws:iam::585008064636:oidc-provider/token.actions.githubusercontent.com]
+aws_ecr_repository.api: Refreshing state... [id=tentotalenglish-api]
+aws_eip.nat: Refreshing state... [id=eipalloc-0114228d855c0e963]
+data.aws_iam_policy_document.ecs_task_assume: Read complete after 0s [id=1077804475]
+aws_vpc.this: Refreshing state... [id=vpc-0027df53fab0979c4]
+data.aws_caller_identity.current: Read complete after 0s [id=585008064636]
+aws_ecs_cluster.this: Refreshing state... [id=arn:aws:ecs:us-west-2:585008064636:cluster/tentotalenglish-prod]
+aws_iam_role.ecs_task_execution: Refreshing state... [id=tentotalenglish-ecs-task-exec]
+aws_s3_bucket.frontend: Refreshing state... [id=tentotalenglish-frontend-prod-585008064636]
+data.aws_iam_policy_document.github_assume_role: Reading...
+data.aws_iam_policy_document.github_assume_role: Read complete after 0s [id=1189197951]
+aws_iam_role.github_actions: Refreshing state... [id=tentotalenglish-github-actions]
+aws_internet_gateway.this: Refreshing state... [id=igw-09a7838e0acf9c6aa]
+aws_subnet.public_b: Refreshing state... [id=subnet-0838988b9ef334cb9]
+aws_iam_role_policy.ecs_task_secrets_read: Refreshing state... [id=tentotalenglish-ecs-task-exec:tentotalenglish-ecs-secrets-read]
+aws_subnet.public_a: Refreshing state... [id=subnet-03d73235c4623b247]
+aws_subnet.private_a: Refreshing state... [id=subnet-0b01a8cb98759fa18]
+aws_subnet.private_b: Refreshing state... [id=subnet-0d1ce22520b15884f]
+aws_lb_target_group.api: Refreshing state... [id=arn:aws:elasticloadbalancing:us-west-2:585008064636:targetgroup/tentotalenglish-api-tg/372d7621685b7935]
+aws_security_group.alb: Refreshing state... [id=sg-04ae42981b5b2ab9c]
+aws_ecs_task_definition.api: Refreshing state... [id=tentotalenglish-api]
+aws_iam_role_policy_attachment.ecs_task_exec_policy: Refreshing state... [id=tentotalenglish-ecs-task-exec-20260127061235677200000002]
+aws_route_table.public: Refreshing state... [id=rtb-0cb0f2772d3089915]
+aws_nat_gateway.this: Refreshing state... [id=nat-0d8187e61fa00eea3]
+aws_route_table_association.public_a: Refreshing state... [id=rtbassoc-0e194d4036ff11d75]
+aws_route_table_association.public_b: Refreshing state... [id=rtbassoc-0ab80900bc1913d8c]
+aws_db_subnet_group.this: Refreshing state... [id=tentotalenglish-db-subnets]
+aws_lb.api: Refreshing state... [id=arn:aws:elasticloadbalancing:us-west-2:585008064636:loadbalancer/app/tentotalenglish-api-alb/8b71e18a264df86f]
+aws_security_group.api: Refreshing state... [id=sg-0253b88d615d2a6a9]
+aws_route_table.private: Refreshing state... [id=rtb-0818016a7703aa15a]
+aws_security_group.db: Refreshing state... [id=sg-0d237d7592454d869]
+aws_route_table_association.private_a: Refreshing state... [id=rtbassoc-059a69a50419d4fad]
+aws_route_table_association.private_b: Refreshing state... [id=rtbassoc-0e5c5169ebe34fba2]
+aws_s3_bucket_public_access_block.frontend: Refreshing state... [id=tentotalenglish-frontend-prod-585008064636]
+aws_s3_bucket_versioning.frontend: Refreshing state... [id=tentotalenglish-frontend-prod-585008064636]
+data.aws_iam_policy_document.github_actions_permissions: Reading...
+data.aws_iam_policy_document.github_actions_permissions: Read complete after 1s [id=4075351477]
+aws_iam_role_policy.github_actions_inline: Refreshing state... [id=tentotalenglish-github-actions:tentotalenglish-github-actions-policy]
+aws_lb_listener.http: Refreshing state... [id=arn:aws:elasticloadbalancing:us-west-2:585008064636:listener/app/tentotalenglish-api-alb/8b71e18a264df86f/9905b417bb4a4b11]
+aws_lb_listener.https: Refreshing state... [id=arn:aws:elasticloadbalancing:us-west-2:585008064636:listener/app/tentotalenglish-api-alb/8b71e18a264df86f/8c247043dd78d269]
+aws_cloudfront_distribution.frontend: Refreshing state... [id=E1PP43GP2E6NOL]
+aws_db_instance.this: Refreshing state... [id=db-UYZIW3LT2OV666HENRWBS46GZY]
+aws_secretsmanager_secret_version.db: Refreshing state... [id=arn:aws:secretsmanager:us-west-2:585008064636:secret:tentotalenglish/prod/db-dLarVv|terraform-20260127070108324500000002]
+aws_secretsmanager_secret_version.api: Refreshing state... [id=arn:aws:secretsmanager:us-west-2:585008064636:secret:tentotalenglish/prod/api-J1ftWn|terraform-20260127070108324500000001]
+aws_ecs_service.api: Refreshing state... [id=arn:aws:ecs:us-west-2:585008064636:service/tentotalenglish-prod/tentotalenglish-api]
+aws_s3_bucket_policy.frontend: Refreshing state... [id=tentotalenglish-frontend-prod-585008064636]
+
+Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following
+symbols:
+  ~ update in-place
+-/+ destroy and then create replacement
+ <= read (data resources)
+
+Terraform will perform the following actions:
+
+  # data.aws_ecs_task_definition.api_latest will be read during apply
+  # (depends on a resource or a module with changes pending)
+ <= data "aws_ecs_task_definition" "api_latest" {
+      + arn                      = (known after apply)
+      + arn_without_revision     = (known after apply)
+      + container_definitions    = (known after apply)
+      + cpu                      = (known after apply)
+      + enable_fault_injection   = (known after apply)
+      + ephemeral_storage        = (known after apply)
+      + execution_role_arn       = (known after apply)
+      + family                   = (known after apply)
+      + id                       = (known after apply)
+      + inference_accelerator    = (known after apply)
+      + ipc_mode                 = (known after apply)
+      + memory                   = (known after apply)
+      + network_mode             = (known after apply)
+      + pid_mode                 = (known after apply)
+      + placement_constraints    = (known after apply)
+      + proxy_configuration      = (known after apply)
+      + requires_compatibilities = (known after apply)
+      + revision                 = (known after apply)
+      + runtime_platform         = (known after apply)
+      + status                   = (known after apply)
+      + task_definition          = "tentotalenglish-api"
+      + task_role_arn            = (known after apply)
+      + volume                   = (known after apply)
+    }
+
+  # data.aws_iam_policy_document.frontend_bucket_policy will be read during apply
+  # (depends on a resource or a module with changes pending)
+ <= data "aws_iam_policy_document" "frontend_bucket_policy" {
+      + id            = (known after apply)
+      + json          = (known after apply)
+      + minified_json = (known after apply)
+
+      + statement {
+          + actions   = [
+              + "s3:GetObject",
+            ]
+          + resources = [
+              + "arn:aws:s3:::tentotalenglish-frontend-prod-585008064636/*",
+            ]
+          + sid       = "AllowCloudFrontRead"
+
+          + condition {
+              + test     = "StringEquals"
+              + values   = [
+                  + "arn:aws:cloudfront::585008064636:distribution/E1PP43GP2E6NOL",
+                ]
+              + variable = "AWS:SourceArn"
+            }
+
+          + principals {
+              + identifiers = [
+                  + "cloudfront.amazonaws.com",
+                ]
+              + type        = "Service"
+            }
+        }
+    }
+
+  # data.aws_iam_policy_document.secrets_read will be read during apply
+  # (depends on a resource or a module with changes pending)
+ <= data "aws_iam_policy_document" "secrets_read" {
+      + id            = (known after apply)
+      + json          = (known after apply)
+      + minified_json = (known after apply)
+
+      + statement {
+          + actions   = [
+              + "kms:Decrypt",
+              + "secretsmanager:GetSecretValue",
+            ]
+          + resources = [
+              + "arn:aws:secretsmanager:us-west-2:585008064636:secret:tentotalenglish/prod/admin-fKCxTj",
+              + "arn:aws:secretsmanager:us-west-2:585008064636:secret:tentotalenglish/prod/api-J1ftWn",
+              + "arn:aws:secretsmanager:us-west-2:585008064636:secret:tentotalenglish/prod/db-dLarVv",
+            ]
+        }
+    }
+
+  # aws_cloudfront_distribution.frontend will be updated in-place
+  ~ resource "aws_cloudfront_distribution" "frontend" {
+        id                              = "E1PP43GP2E6NOL"
+        tags                            = {
+            "Name" = "tentotalenglish-frontend-cf"
+        }
+        # (22 unchanged attributes hidden)
+
+      ~ ordered_cache_behavior {
+          ~ cached_methods             = [
+              + "OPTIONS",
+                # (2 unchanged elements hidden)
+            ]
+            # (16 unchanged attributes hidden)
+
+          ~ forwarded_values {
+                # (3 unchanged attributes hidden)
+
+              ~ cookies {
+                  ~ forward           = "all" -> "none"
+                    # (1 unchanged attribute hidden)
+                }
+            }
+
+            # (1 unchanged block hidden)
+        }
+
+        # (7 unchanged blocks hidden)
+    }
+
+  # aws_ecs_service.api will be updated in-place
+  ~ resource "aws_ecs_service" "api" {
+        id                                 = "arn:aws:ecs:us-west-2:585008064636:service/tentotalenglish-prod/tentotalenglish-api"
+        name                               = "tentotalenglish-api"
+        tags                               = {}
+      ~ task_definition                    = "arn:aws:ecs:us-west-2:585008064636:task-definition/tentotalenglish-api:3" -> (known after apply)
+        # (16 unchanged attributes hidden)
+
+        # (4 unchanged blocks hidden)
+    }
+
+  # aws_ecs_task_definition.api must be replaced
+-/+ resource "aws_ecs_task_definition" "api" {
+      ~ arn                      = "arn:aws:ecs:us-west-2:585008064636:task-definition/tentotalenglish-api:1" -> (known after apply)
+      ~ arn_without_revision     = "arn:aws:ecs:us-west-2:585008064636:task-definition/tentotalenglish-api" -> (known after apply)
+      ~ container_definitions    = jsonencode(
+          ~ [
+              ~ {
+                  - mountPoints      = []
+                    name             = "api"
+                  ~ secrets          = [
+                      + {
+                          + name      = "Admin__Password"
+                          + valueFrom = "arn:aws:secretsmanager:us-west-2:585008064636:secret:tentotalenglish/prod/admin-fKCxTj:Admin__Password::"
+                        },
+                      + {
+                          + name      = "Admin__Username"
+                          + valueFrom = "arn:aws:secretsmanager:us-west-2:585008064636:secret:tentotalenglish/prod/admin-fKCxTj:Admin__Username::"
+                        },
+                        {
+                            name      = "ConnectionStrings__Postgres"
+                            valueFrom = "arn:aws:secretsmanager:us-west-2:585008064636:secret:tentotalenglish/prod/api-J1ftWn:ConnectionStrings__Postgres::"
+                        },
+                        # (3 unchanged elements hidden)
+                    ]
+                  - systemControls   = []
+                  - volumesFrom      = []
+                    # (5 unchanged attributes hidden)
+                },
+            ] # forces replacement
+        )
+      ~ enable_fault_injection   = false -> (known after apply)
+      ~ id                       = "tentotalenglish-api" -> (known after apply)
+      ~ revision                 = 1 -> (known after apply)
+      - tags                     = {} -> null
+      ~ tags_all                 = {} -> (known after apply)
+        # (11 unchanged attributes hidden)
+    }
+
+  # aws_iam_role_policy.ecs_task_secrets_read will be updated in-place
+  ~ resource "aws_iam_role_policy" "ecs_task_secrets_read" {
+        id          = "tentotalenglish-ecs-task-exec:tentotalenglish-ecs-secrets-read"
+        name        = "tentotalenglish-ecs-secrets-read"
+      ~ policy      = jsonencode(
+            {
+              - Statement = [
+                  - {
+                      - Action   = [
+                          - "secretsmanager:GetSecretValue",
+                          - "kms:Decrypt",
+                        ]
+                      - Effect   = "Allow"
+                      - Resource = [
+                          - "arn:aws:secretsmanager:us-west-2:585008064636:secret:tentotalenglish/prod/db-dLarVv",
+                          - "arn:aws:secretsmanager:us-west-2:585008064636:secret:tentotalenglish/prod/api-J1ftWn",
+                        ]
+                    },
+                ]
+              - Version   = "2012-10-17"
+            }
+        ) -> (known after apply)
+        # (2 unchanged attributes hidden)
+    }
+
+  # aws_lb_listener.http will be updated in-place
+  ~ resource "aws_lb_listener" "http" {
+        id                                                                  = "arn:aws:elasticloadbalancing:us-west-2:585008064636:listener/app/tentotalenglish-api-alb/8b71e18a264df86f/9905b417bb4a4b11"
+        tags                                                                = {}
+        # (17 unchanged attributes hidden)
+
+      ~ default_action {
+          ~ type             = "forward" -> "redirect"
+            # (2 unchanged attributes hidden)
+
+          + redirect {
+              + host        = "#{host}"
+              + path        = "/#{path}"
+              + port        = "443"
+              + protocol    = "HTTPS"
+              + query       = "#{query}"
+              + status_code = "HTTP_301"
+            }
+        }
+    }
+
+  # aws_s3_bucket_policy.frontend will be updated in-place
+  ~ resource "aws_s3_bucket_policy" "frontend" {
+        id     = "tentotalenglish-frontend-prod-585008064636"
+      ~ policy = jsonencode(
+            {
+              - Statement = [
+                  - {
+                      - Action    = "s3:GetObject"
+                      - Condition = {
+                          - StringEquals = {
+                              - "AWS:SourceArn" = "arn:aws:cloudfront::585008064636:distribution/E1PP43GP2E6NOL"
+                            }
+                        }
+                      - Effect    = "Allow"
+                      - Principal = {
+                          - Service = "cloudfront.amazonaws.com"
+                        }
+                      - Resource  = "arn:aws:s3:::tentotalenglish-frontend-prod-585008064636/*"
+                      - Sid       = "AllowCloudFrontRead"
+                    },
+                ]
+              - Version   = "2012-10-17"
+            }
+        ) -> (known after apply)
+        # (1 unchanged attribute hidden)
+    }
+
+  # aws_secretsmanager_secret.admin will be updated in-place
+  ~ resource "aws_secretsmanager_secret" "admin" {
+      - description                    = "Prod admin credentials for TenTotalEnglish" -> null
+      + force_overwrite_replica_secret = false
+        id                             = "arn:aws:secretsmanager:us-west-2:585008064636:secret:tentotalenglish/prod/admin-fKCxTj"
+        name                           = "tentotalenglish/prod/admin"
+      + recovery_window_in_days        = 30
+        tags                           = {}
+        # (5 unchanged attributes hidden)
+    }
+
+Plan: 1 to add, 6 to change, 1 to destroy.
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+aws_ecs_task_definition.api: Destroying... [id=tentotalenglish-api]
+aws_lb_listener.http: Modifying... [id=arn:aws:elasticloadbalancing:us-west-2:585008064636:listener/app/tentotalenglish-api-alb/8b71e18a264df86f/9905b417bb4a4b11]
+aws_cloudfront_distribution.frontend: Modifying... [id=E1PP43GP2E6NOL]
+aws_ecs_task_definition.api: Destruction complete after 1s
+aws_secretsmanager_secret.admin: Modifying... [id=arn:aws:secretsmanager:us-west-2:585008064636:secret:tentotalenglish/prod/admin-fKCxTj]
+aws_lb_listener.http: Modifications complete after 1s [id=arn:aws:elasticloadbalancing:us-west-2:585008064636:listener/app/tentotalenglish-api-alb/8b71e18a264df86f/9905b417bb4a4b11]
+aws_secretsmanager_secret.admin: Modifications complete after 0s [id=arn:aws:secretsmanager:us-west-2:585008064636:secret:tentotalenglish/prod/admin-fKCxTj]
+data.aws_iam_policy_document.secrets_read: Reading...
+data.aws_iam_policy_document.secrets_read: Read complete after 0s [id=2138591499]
+aws_ecs_task_definition.api: Creating...
+aws_iam_role_policy.ecs_task_secrets_read: Modifying... [id=tentotalenglish-ecs-task-exec:tentotalenglish-ecs-secrets-read]
+aws_ecs_task_definition.api: Creation complete after 0s [id=tentotalenglish-api]
+data.aws_ecs_task_definition.api_latest: Reading...
+data.aws_ecs_task_definition.api_latest: Read complete after 0s [id=arn:aws:ecs:us-west-2:585008064636:task-definition/tentotalenglish-api:4]
+aws_ecs_service.api: Modifying... [id=arn:aws:ecs:us-west-2:585008064636:service/tentotalenglish-prod/tentotalenglish-api]
+aws_iam_role_policy.ecs_task_secrets_read: Modifications complete after 0s [id=tentotalenglish-ecs-task-exec:tentotalenglish-ecs-secrets-read]
+aws_ecs_service.api: Modifications complete after 1s [id=arn:aws:ecs:us-west-2:585008064636:service/tentotalenglish-prod/tentotalenglish-api]
+aws_cloudfront_distribution.frontend: Still modifying... [id=E1PP43GP2E6NOL, 00m10s elapsed]
+aws_cloudfront_distribution.frontend: Still modifying... [id=E1PP43GP2E6NOL, 00m20s elapsed]
+aws_cloudfront_distribution.frontend: Still modifying... [id=E1PP43GP2E6NOL, 00m30s elapsed]
+aws_cloudfront_distribution.frontend: Still modifying... [id=E1PP43GP2E6NOL, 00m40s elapsed]
+aws_cloudfront_distribution.frontend: Still modifying... [id=E1PP43GP2E6NOL, 00m50s elapsed]
+aws_cloudfront_distribution.frontend: Still modifying... [id=E1PP43GP2E6NOL, 01m00s elapsed]
+aws_cloudfront_distribution.frontend: Still modifying... [id=E1PP43GP2E6NOL, 01m10s elapsed]
+aws_cloudfront_distribution.frontend: Modifications complete after 1m19s [id=E1PP43GP2E6NOL]
+data.aws_iam_policy_document.frontend_bucket_policy: Reading...
+data.aws_iam_policy_document.frontend_bucket_policy: Read complete after 0s [id=2364812339]
+╷
+│ Warning: Invalid Attribute Combination
+│
+│   with aws_lb_listener.http,
+│   on ecs_alb.tf line 134, in resource "aws_lb_listener" "http":
+│  134:   default_action {
+│
+│ Attribute "default_action[0].target_group_arn" cannot be specified when "default_action[0].type" is "redirect".
+│
+│ This will be an error in a future release.
+╵
+
+Apply complete! Resources: 1 added, 5 changed, 1 destroyed.
+
+Outputs:
+
+admin_secret_arn = "arn:aws:secretsmanager:us-west-2:585008064636:secret:tentotalenglish/prod/admin-fKCxTj"
+api_alb_dns = "tentotalenglish-api-alb-61492906.us-west-2.elb.amazonaws.com"
+db_endpoint = "tentotalenglish-prod-db.ctsmw4eguq58.us-west-2.rds.amazonaws.com"
+db_secret_arn = "arn:aws:secretsmanager:us-west-2:585008064636:secret:tentotalenglish/prod/db-dLarVv"
+ecr_api_repo_url = "585008064636.dkr.ecr.us-west-2.amazonaws.com/tentotalenglish-api"
+frontend_bucket_name = "tentotalenglish-frontend-prod-585008064636"
+frontend_cloudfront_domain = "d32tdcujn6jw3a.cloudfront.net"
+frontend_cloudfront_id = "E1PP43GP2E6NOL"
+github_actions_role_arn = "arn:aws:iam::585008064636:role/tentotalenglish-github-actions"
+
+C:\Users\lmechsan\Downloads\TentotalEnglish\infra>aws ecs wait services-stable --cluster tentotalenglish-prod --services tentotalenglish-api --region us-west-2 --profile tentotalenglish
+
+C:\Users\lmechsan\Downloads\TentotalEnglish\infra>set Admin__Username=TotalEnglishAdmin
+
+C:\Users\lmechsan\Downloads\TentotalEnglish\infra>set Admin__Password=#Centinela1999!#
+
+C:\Users\lmechsan\Downloads\TentotalEnglish\infra>cd ..
+
+C:\Users\lmechsan\Downloads\TentotalEnglish>docker ps
+CONTAINER ID   IMAGE         COMMAND                  CREATED       STATUS      PORTS                                         NAMES
+a7984aff666a   postgres:16   "docker-entrypoint.s…"   2 weeks ago   Up 2 days   0.0.0.0:5432->5432/tcp, [::]:5432->5432/tcp   tentotalenglish-postgres
+
+C:\Users\lmechsan\Downloads\TentotalEnglish>docker exec -it a7984aff666a psql -U postgres
+psql: error: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: FATAL:  role "postgres" does not exist
+
+C:\Users\lmechsan\Downloads\TentotalEnglish>docker inspect tentotalenglish-postgres --format "{{range .Config.Env}}{{println .}}{{end}}"
+POSTGRES_USER=tentotalenglish
+POSTGRES_PASSWORD=tentotalenglish
+POSTGRES_DB=tentotalenglish_db
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/lib/postgresql/16/bin
+GOSU_VERSION=1.19
+LANG=en_US.utf8
+PG_MAJOR=16
+PG_VERSION=16.11-1.pgdg13+1
+PGDATA=/var/lib/postgresql/data
+
+
+C:\Users\lmechsan\Downloads\TentotalEnglish>docker exec -it tentotalenglish-postgres psql -U tentotalenglish -d tentotalenglish_db
+psql (16.11 (Debian 16.11-1.pgdg13+1))
+Type "help" for help.
+
+tentotalenglish_db=# SELECT "Username" FROM "AdminUsers";
+ Username
+----------
+ admin
+(1 row)
+
+tentotalenglish_db=# DELETE FROM "AdminUsers" WHERE "Username" = 'admin';
+DELETE 1
+tentotalenglish_db=# SELECT "Username" FROM "AdminUsers";
+ Username
+----------
+(0 rows)
+
+tentotalenglish_db=# ~^C
+tentotalenglish_db=# ^C
+tentotalenglish_db=# exit
+
+C:\Users\lmechsan\Downloads\TentotalEnglish>set Admin__Username=TotalEnglishAdmin
+
+C:\Users\lmechsan\Downloads\TentotalEnglish>set Admin__Password=#Centinela1999!#
+
+C:\Users\lmechsan\Downloads\TentotalEnglish>dotnet run --project TentotalEnglish.Api
+Using launch settings from TentotalEnglish.Api\Properties\launchSettings.json...
+Building...
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (28ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT "MigrationId", "ProductVersion"
+      FROM "__EFMigrationsHistory"
+      ORDER BY "MigrationId";
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (10ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE IF NOT EXISTS "__EFMigrationsHistory" (
+          "MigrationId" character varying(150) NOT NULL,
+          "ProductVersion" character varying(32) NOT NULL,
+          CONSTRAINT "PK___EFMigrationsHistory" PRIMARY KEY ("MigrationId")
+      );
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (3ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      LOCK TABLE "__EFMigrationsHistory" IN ACCESS EXCLUSIVE MODE
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT "MigrationId", "ProductVersion"
+      FROM "__EFMigrationsHistory"
+      ORDER BY "MigrationId";
+info: Microsoft.EntityFrameworkCore.Migrations[20405]
+      No migrations were applied. The database is already up to date.
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (13ms) [Parameters=[@__adminUser_0='?'], CommandType='Text', CommandTimeout='30']
+      SELECT EXISTS (
+          SELECT 1
+          FROM "AdminUsers" AS a
+          WHERE a."Username" = @__adminUser_0)
+info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (21ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime), @p2='?', @p3='?'], CommandType='Text', CommandTimeout='30']
+      INSERT INTO "AdminUsers" ("Id", "CreatedAtUtc", "PasswordHash", "Username")
+      VALUES (@p0, @p1, @p2, @p3);
+info: Microsoft.Hosting.Lifetime[14]
+      Now listening on: http://localhost:5054
+info: Microsoft.Hosting.Lifetime[0]
+      Application started. Press Ctrl+C to shut down.
+info: Microsoft.Hosting.Lifetime[0]
+      Hosting environment: Development
+info: Microsoft.Hosting.Lifetime[0]
+      Content root path: C:\Users\lmechsan\Downloads\TentotalEnglish\TentotalEnglish.Api
+info: Microsoft.Hosting.Lifetime[0]
+      Application is shutting down...
+
+C:\Users\lmechsan\Downloads\TentotalEnglish>set Admin__Username=TotalEnglishAdmin
+
+C:\Users\lmechsan\Downloads\TentotalEnglish>set Admin__Username=TotalEnglishAdmin
+
+C:\Users\lmechsan\Downloads\TentotalEnglish>set Admin__Password=#Centinela1999!#
+
+C:\Users\lmechsan\Downloads\TentotalEnglish>docker exec -it tentotalenglish-postgres psql -U tentotalenglish -d tentotalenglish_db
+psql (16.11 (Debian 16.11-1.pgdg13+1))
+Type "help" for help.
+
+tentotalenglish_db=# SELECT "Username" FROM "AdminUsers";
+     Username
+-------------------
+ TotalEnglishAdmin
+(1 row)
+
+tentotalenglish_db=# DELETE FROM "AdminUsers" WHERE "Username" = 'admin';
+DELETE 0
+tentotalenglish_db=# ~^C
+tentotalenglish_db=# exit
+
+C:\Users\lmechsan\Downloads\TentotalEnglish>aws ecs describe-task-definition --task-definition tentotalenglish-api --region us-west-2 --profile tentotalenglish --query "taskDefinition.containerDefinitions[0].secrets"
+[
+    {
+        "name": "ConnectionStrings__Postgres",
+        "valueFrom": "arn:aws:secretsmanager:us-west-2:585008064636:secret:tentotalenglish/prod/api-J1ftWn:ConnectionStrings__Postgres::"
+    },
+    {
+        "name": "Jwt__Issuer",
+        "valueFrom": "arn:aws:secretsmanager:us-west-2:585008064636:secret:tentotalenglish/prod/api-J1ftWn:Jwt__Issuer::"
+    },
+    {
+        "name": "Jwt__Audience",
+        "valueFrom": "arn:aws:secretsmanager:us-west-2:585008064636:secret:tentotalenglish/prod/api-J1ftWn:Jwt__Audience::"
+    },
+    {
+        "name": "Jwt__Key",
+        "valueFrom": "arn:aws:secretsmanager:us-west-2:585008064636:secret:tentotalenglish/prod/api-J1ftWn:Jwt__Key::"
+    },
+    {
+        "name": "Admin__Username",
+        "valueFrom": "arn:aws:secretsmanager:us-west-2:585008064636:secret:tentotalenglish/prod/admin-fKCxTj:Admin__Username::"
+    },
+    {
+        "name": "Admin__Password",
+        "valueFrom": "arn:aws:secretsmanager:us-west-2:585008064636:secret:tentotalenglish/prod/admin-fKCxTj:Admin__Password::"
+    }
+]
+
+
+C:\Users\lmechsan\Downloads\TentotalEnglish>aws ecs update-service --cluster tentotalenglish-prod --service tentotalenglish-api --force-new-deployment --region us-west-2 --profile tentotalenglish
+{
+    "service": {
+        "serviceArn": "arn:aws:ecs:us-west-2:585008064636:service/tentotalenglish-prod/tentotalenglish-api",
+        "serviceName": "tentotalenglish-api",
+        "clusterArn": "arn:aws:ecs:us-west-2:585008064636:cluster/tentotalenglish-prod",
+        "loadBalancers": [
+            {
+                "targetGroupArn": "arn:aws:elasticloadbalancing:us-west-2:585008064636:targetgroup/tentotalenglish-api-tg/372d7621685b7935",
+                "containerName": "api",
+                "containerPort": 8080
+            }
+        ],
+        "serviceRegistries": [],
+        "status": "ACTIVE",
+        "desiredCount": 1,
+        "runningCount": 1,
+        "pendingCount": 0,
+        "launchType": "FARGATE",
+        "platformVersion": "LATEST",
+        "platformFamily": "Linux",
+        "taskDefinition": "arn:aws:ecs:us-west-2:585008064636:task-definition/tentotalenglish-api:4",
+        "deploymentConfiguration": {
+            "deploymentCircuitBreaker": {
+                "enable": false,
+                "rollback": false
+            },
+            "maximumPercent": 200,
+            "minimumHealthyPercent": 100,
+            "strategy": "ROLLING",
+            "bakeTimeInMinutes": 0
+        },
+
+
+C:\Users\lmechsan\Downloads\TentotalEnglish>aws ecs wait services-stable --cluster tentotalenglish-prod --services tentotalenglish-api --region us-west-2 --profile tentotalenglish
+
+C:\Users\lmechsan\Downloads\TentotalEnglish>aws ecs wait services-stable --cluster tentotalenglish-prod --services tentotalenglish-api --region us-west-2 --profile tentotalenglish
+
+C:\Users\lmechsan\Downloads\TentotalEnglish>aws logs tail /ecs/tentotalenglish-api --since 15m --region us-west-2 --profile tentotalenglish
+2026-01-31T07:23:32.998000+00:00 api/api/5f026f2631b34eac9a6a68b8fbb468ce info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+2026-01-31T07:23:32.998000+00:00 api/api/5f026f2631b34eac9a6a68b8fbb468ce       Executed DbCommand (94ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+2026-01-31T07:23:32.998000+00:00 api/api/5f026f2631b34eac9a6a68b8fbb468ce       SELECT "MigrationId", "ProductVersion"
+2026-01-31T07:23:32.998000+00:00 api/api/5f026f2631b34eac9a6a68b8fbb468ce       FROM "__EFMigrationsHistory"
+2026-01-31T07:23:32.998000+00:00 api/api/5f026f2631b34eac9a6a68b8fbb468ce       ORDER BY "MigrationId";
+2026-01-31T07:23:33.985000+00:00 api/api/5f026f2631b34eac9a6a68b8fbb468ce info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+2026-01-31T07:23:33.985000+00:00 api/api/5f026f2631b34eac9a6a68b8fbb468ce       Executed DbCommand (9ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+2026-01-31T07:23:33.985000+00:00 api/api/5f026f2631b34eac9a6a68b8fbb468ce       CREATE TABLE IF NOT EXISTS "__EFMigrationsHistory" (
+2026-01-31T07:23:33.985000+00:00 api/api/5f026f2631b34eac9a6a68b8fbb468ce           "MigrationId" character varying(150) NOT NULL,
+2026-01-31T07:23:33.985000+00:00 api/api/5f026f2631b34eac9a6a68b8fbb468ce           "ProductVersion" character varying(32) NOT NULL,
+2026-01-31T07:23:33.985000+00:00 api/api/5f026f2631b34eac9a6a68b8fbb468ce           CONSTRAINT "PK___EFMigrationsHistory" PRIMARY KEY ("MigrationId")
+2026-01-31T07:23:33.985000+00:00 api/api/5f026f2631b34eac9a6a68b8fbb468ce       );
+2026-01-31T07:23:34.002000+00:00 api/api/5f026f2631b34eac9a6a68b8fbb468ce info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+2026-01-31T07:23:34.002000+00:00 api/api/5f026f2631b34eac9a6a68b8fbb468ce       Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+2026-01-31T07:23:34.002000+00:00 api/api/5f026f2631b34eac9a6a68b8fbb468ce       LOCK TABLE "__EFMigrationsHistory" IN ACCESS EXCLUSIVE MODE
+2026-01-31T07:23:34.086000+00:00 api/api/5f026f2631b34eac9a6a68b8fbb468ce info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+2026-01-31T07:23:34.086000+00:00 api/api/5f026f2631b34eac9a6a68b8fbb468ce       Executed DbCommand (83ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+2026-01-31T07:23:34.086000+00:00 api/api/5f026f2631b34eac9a6a68b8fbb468ce       SELECT "MigrationId", "ProductVersion"
+2026-01-31T07:23:34.086000+00:00 api/api/5f026f2631b34eac9a6a68b8fbb468ce       FROM "__EFMigrationsHistory"
+2026-01-31T07:23:34.086000+00:00 api/api/5f026f2631b34eac9a6a68b8fbb468ce       ORDER BY "MigrationId";
+2026-01-31T07:23:34.091000+00:00 api/api/5f026f2631b34eac9a6a68b8fbb468ce info: Microsoft.EntityFrameworkCore.Migrations[20405]
+2026-01-31T07:23:34.091000+00:00 api/api/5f026f2631b34eac9a6a68b8fbb468ce       No migrations were applied. The database is already up to date.
+2026-01-31T07:23:34.997000+00:00 api/api/5f026f2631b34eac9a6a68b8fbb468ce info: Microsoft.EntityFrameworkCore.Database.Command[20101]
+2026-01-31T07:23:34.997000+00:00 api/api/5f026f2631b34eac9a6a68b8fbb468ce       Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+2026-01-31T07:23:34.997000+00:00 api/api/5f026f2631b34eac9a6a68b8fbb468ce       SELECT EXISTS (
+2026-01-31T07:23:34.997000+00:00 api/api/5f026f2631b34eac9a6a68b8fbb468ce           SELECT 1
+2026-01-31T07:23:34.997000+00:00 api/api/5f026f2631b34eac9a6a68b8fbb468ce           FROM "AdminUsers" AS a
+2026-01-31T07:23:34.997000+00:00 api/api/5f026f2631b34eac9a6a68b8fbb468ce           WHERE a."Username" = 'admin')
+2026-01-31T07:23:35.390000+00:00 api/api/5f026f2631b34eac9a6a68b8fbb468ce warn: Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository[60]
+2026-01-31T07:23:35.390000+00:00 api/api/5f026f2631b34eac9a6a68b8fbb468ce       Storing keys in a directory '/root/.aspnet/DataProtection-Keys' that may not be persisted outside of the container. Protected data will be unavailable when container is destroyed. For more information go to https://aka.ms/aspnet/dataprotectionwarning
+2026-01-31T07:23:35.404000+00:00 api/api/5f026f2631b34eac9a6a68b8fbb468ce warn: Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager[35]
+2026-01-31T07:23:35.404000+00:00 api/api/5f026f2631b34eac9a6a68b8fbb468ce       No XML encryptor configured. Key {338ee351-9fc9-4123-83ca-659b38eeb90f} may be persisted to storage in unencrypted form.
+2026-01-31T07:23:35.493000+00:00 api/api/5f026f2631b34eac9a6a68b8fbb468ce warn: Microsoft.AspNetCore.Hosting.Diagnostics[15]
+2026-01-31T07:23:35.493000+00:00 api/api/5f026f2631b34eac9a6a68b8fbb468ce       Overriding HTTP_PORTS '8080' and HTTPS_PORTS ''. Binding to values defined by URLS instead 'http://+:8080'.
+2026-01-31T07:23:35.601000+00:00 api/api/5f026f2631b34eac9a6a68b8fbb468ce info: Microsoft.Hosting.Lifetime[14]
+2026-01-31T07:23:35.601000+00:00 api/api/5f026f2631b34eac9a6a68b8fbb468ce       Now listening on: http://[::]:8080
+2026-01-31T07:23:35.601000+00:00 api/api/5f026f2631b34eac9a6a68b8fbb468ce info: Microsoft.Hosting.Lifetime[0]
+2026-01-31T07:23:35.601000+00:00 api/api/5f026f2631b34eac9a6a68b8fbb468ce       Application started. Press Ctrl+C to shut down.
+2026-01-31T07:23:35.601000+00:00 api/api/5f026f2631b34eac9a6a68b8fbb468ce info: Microsoft.Hosting.Lifetime[0]
+2026-01-31T07:23:35.601000+00:00 api/api/5f026f2631b34eac9a6a68b8fbb468ce       Hosting environment: Production
+2026-01-31T07:23:35.601000+00:00 api/api/5f026f2631b34eac9a6a68b8fbb468ce info: Microsoft.Hosting.Lifetime[0]
+2026-01-31T07:23:35.601000+00:00 api/api/5f026f2631b34eac9a6a68b8fbb468ce       Content root path: /app
+
+C:\Users\lmechsan\Downloads\TentotalEnglish>git add .
+warning: in the working copy of 'TentotalEnglish.Api/obj/Debug/net9.0/EndpointInfo/TentotalEnglish.Api.json', LF will be replaced by CRLF the next time Git touches it
+
+C:\Users\lmechsan\Downloads\TentotalEnglish>git commit -m "Fix API base URL to use domain"
+[main 8412419] Fix API base URL to use domain
+ 60 files changed, 429 insertions(+), 61 deletions(-)
+ create mode 100644 infra/admin_secret.tf
+ create mode 100644 infra/log cmd.txt
+
+C:\Users\lmechsan\Downloads\TentotalEnglish>git push origin main
+Enumerating objects: 120, done.
+Counting objects: 100% (120/120), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (60/60), done.
+Writing objects: 100% (72/72), 60.22 KiB | 1.23 MiB/s, done.
+Total 72 (delta 43), reused 0 (delta 0), pack-reused 0 (from 0)
+remote: Resolving deltas: 100% (43/43), completed with 31 local objects.
+To https://github.com/Zakmathus/TenTotalEnglish.git
+   dd650e3..8412419  main -> main
+
+C:\Users\lmechsan\Downloads\TentotalEnglish>cd C:\Users\lmechsan\Downloads\TentotalEnglish\tentotalenglish-admin
+
+C:\Users\lmechsan\Downloads\TentotalEnglish\tentotalenglish-admin>findstr /s /i "VITE_API_BASE_URL" tentotalenglish-admin\.env* tentotalenglish-admin\src\api\http.ts tentotalenglish-admin\src\api\*.ts
+
+C:\Users\lmechsan\Downloads\TentotalEnglish\tentotalenglish-admin>findstr /s /i "amazonaws" tentotalenglish-admin\src\*.ts tentotalenglish-admin\src\*.tsx tentotalenglish-admin\.env*
+
+C:\Users\lmechsan\Downloads\TentotalEnglish\tentotalenglish-admin>curl -k -X POST "https://<LA_MISMA_URL_DEL_ERROR>/api/auth/login" ^
+More?   -H "Content-Type: application/json" ^
+More?   -d "{\"username\":\"TotalEnglishAdmin\",\"password\":\"#Centinela1999!#\"}"
+curl: (3) URL rejected: Bad hostname
+
+C:\Users\lmechsan\Downloads\TentotalEnglish\tentotalenglish-admin>curl -k -X POST "https://www.tentotalenglish.com/api/auth/login" ^
+More?   -H "Content-Type: application/json" ^
+More?   -d "{\"username\":\"TotalEnglishAdmin\",\"password\":\"#Centinela1999!#\"}"
+<html>
+<head><title>301 Moved Permanently</title></head>
+<body>
+<center><h1>301 Moved Permanently</h1></center>
+</body>
+</html>
+
+C:\Users\lmechsan\Downloads\TentotalEnglish\tentotalenglish-admin>curl -k -i -X POST "https://tentotalenglish.com/api/auth/login" ^
+More?   -H "Content-Type: application/json" ^
+More?   -d "{\"username\":\"TotalEnglishAdmin\",\"password\":\"#Centinela1999!#\"}"
+HTTP/1.1 301 Moved Permanently
+Date: Sat, 31 Jan 2026 07:49:20 GMT
+Content-Type: text/html
+Transfer-Encoding: chunked
+Connection: keep-alive
+location: https://tentotalenglish-api-alb-61492906.us-west-2.elb.amazonaws.com:443/api/auth/login
+Server: cloudflare
+x-cache: Miss from cloudfront
+via: 1.1 192ddd46e7022094ac0d78aa289fc162.cloudfront.net (CloudFront)
+x-amz-cf-pop: DFW56-P10
+x-amz-cf-id: AOPdiMMngDoVBxYnRTFKY7G5NmccEjKnMAClJHury3c9uyo1gxqyfQ==
+cf-cache-status: DYNAMIC
+Nel: {"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}
+Report-To: {"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=xLsU8N3ozjxk%2FS1p%2FQ%2BAljvlvZmuvkF5aj0yhK1hN%2B594%2BsbKoXY1auj%2BEe%2FaUCdkaPvVGi8QBVtMAn0ZaB6%2FYT9KlcUK2wuR3AiNTRUyoQSbHj1NxZeftAkZA36"}]}
+CF-RAY: 9c679ca49d96abf8-DFW
+alt-svc: h3=":443"; ma=86400
+
+<html>
+<head><title>301 Moved Permanently</title></head>
+<body>
+<center><h1>301 Moved Permanently</h1></center>
+</body>
+</html>
+
+C:\Users\lmechsan\Downloads\TentotalEnglish\tentotalenglish-admin>curl -k -L -i -X POST "https://www.tentotalenglish.com/api/auth/login" ^
+More?   -H "Content-Type: application/json" ^
+More?   -d "{\"username\":\"TotalEnglishAdmin\",\"password\":\"#Centinela1999!#\"}"
+HTTP/1.1 301 Moved Permanently
+Date: Sat, 31 Jan 2026 07:49:57 GMT
+Content-Type: text/html
+Transfer-Encoding: chunked
+Connection: keep-alive
+location: https://tentotalenglish-api-alb-61492906.us-west-2.elb.amazonaws.com:443/api/auth/login
+Server: cloudflare
+x-cache: Miss from cloudfront
+via: 1.1 5b3b87d1ccad5f1b518875160f3e4686.cloudfront.net (CloudFront)
+x-amz-cf-pop: DFW56-P10
+x-amz-cf-id: GjGmV7wGTfekXu0-TbOV_0t8xp2hY_lasHsfd8TFGPU1DR_iKBHH5Q==
+cf-cache-status: DYNAMIC
+Nel: {"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}
+Report-To: {"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=a%2FOOIaM%2BBo4fw9NAGLde1TSrjdb%2FBmNgmSoklvdhtUX6VD%2FMLRa%2FXPsojtdgNx%2FtjnT7f3ZB93Wp1qj7sU53k3YW7n7acelkU07rG9VRvlvsXstUkViBu37rvND9nDtbUjO%2F"}]}
+CF-RAY: 9c679d894c96d925-DFW
+alt-svc: h3=":443"; ma=86400
+
+HTTP/1.1 400 Bad Request
+Date: Sat, 31 Jan 2026 07:49:57 GMT
+Content-Type: application/problem+json; charset=utf-8
+Transfer-Encoding: chunked
+Connection: keep-alive
+Server: Kestrel
+
+{"type":"https://tools.ietf.org/html/rfc9110#section-15.5.1","title":"One or more validation errors occurred.","status":400,"errors":{"":["A non-empty request body is required."],"req":["The req field is required."]},"traceId":"00-17b1d6f3de1b28355b9396ce6a451778-c91e21cffa3033be-00"}
+C:\Users\lmechsan\Downloads\TentotalEnglish\tentotalenglish-admin>curl -i -X POST "http://tentotalenglish-api-alb-61492906.us-west-2.elb.amazonaws.com/api/auth/login" ^
+More?   -H "Content-Type: application/json" ^
+More?   -d "{\"username\":\"TotalEnglishAdmin\",\"password\":\"#Centinela1999!#\"}"
+HTTP/1.1 301 Moved Permanently
+Server: awselb/2.0
+Date: Sat, 31 Jan 2026 07:53:29 GMT
+Content-Type: text/html
+Content-Length: 134
+Connection: keep-alive
+Location: https://tentotalenglish-api-alb-61492906.us-west-2.elb.amazonaws.com:443/api/auth/login
+
+<html>
+<head><title>301 Moved Permanently</title></head>
+<body>
+<center><h1>301 Moved Permanently</h1></center>
+</body>
+</html>
+
+C:\Users\lmechsan\Downloads\TentotalEnglish\tentotalenglish-admin>curl -i "http://tentotalenglish-api-alb-61492906.us-west-2.elb.amazonaws.com/swagger/v1/swagger.json"
+HTTP/1.1 301 Moved Permanently
+Server: awselb/2.0
+Date: Sat, 31 Jan 2026 07:55:01 GMT
+Content-Type: text/html
+Content-Length: 134
+Connection: keep-alive
+Location: https://tentotalenglish-api-alb-61492906.us-west-2.elb.amazonaws.com:443/swagger/v1/swagger.json
+
+<html>
+<head><title>301 Moved Permanently</title></head>
+<body>
+<center><h1>301 Moved Permanently</h1></center>
+</body>
+</html>
+
+C:\Users\lmechsan\Downloads\TentotalEnglish\tentotalenglish-admin>
