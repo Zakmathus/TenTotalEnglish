@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/main.tsx","./src/api/enrollmentsapi.ts","./src/api/groupsapi.ts","./src/api/paymentsapi.ts","./src/api/studentsapi.ts","./src/pages/enrollmentspage.tsx","./src/pages/groupspage.tsx","./src/pages/paymentspage.tsx","./src/pages/studentspage.tsx"],"version":"5.9.3"}

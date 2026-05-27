@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AWSSDK.DynamoDBv2" Version="4.0.8.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TenTotalEnglish.Students.Application\TenTotalEnglish.Students.Application.csproj" />
+    <ProjectReference Include="..\TenTotalEnglish.Students.Domain\TenTotalEnglish.Students.Domain.csproj" />
+    <ProjectReference Include="..\..\..\building-blocks\TenTotalEnglish.SharedInfrastructure\TenTotalEnglish.SharedInfrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

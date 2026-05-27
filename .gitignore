@@ -1,0 +1,16 @@
+bin/
+obj/
+.vs/
+.vscode/
+TestResults/
+artifacts/
+.terraform/
+*.tfstate
+*.tfstate.*
+*.user
+*.suo
+*.cache
+*.log
+node_modules/
+dist/
+coverage/

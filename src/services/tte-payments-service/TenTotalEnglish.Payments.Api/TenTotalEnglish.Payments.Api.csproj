@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <GenerateRuntimeConfigurationFiles>true</GenerateRuntimeConfigurationFiles>
+    <AWSProjectType>Lambda</AWSProjectType>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Amazon.Lambda.APIGatewayEvents" Version="2.7.1" />
+    <PackageReference Include="Amazon.Lambda.Core" Version="2.7.0" />
+    <PackageReference Include="Amazon.Lambda.Serialization.SystemTextJson" Version="2.4.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TenTotalEnglish.Payments.Application\TenTotalEnglish.Payments.Application.csproj" />
+    <ProjectReference Include="..\TenTotalEnglish.Payments.Infrastructure\TenTotalEnglish.Payments.Infrastructure.csproj" />
+    <ProjectReference Include="..\TenTotalEnglish.Payments.Domain\TenTotalEnglish.Payments.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
